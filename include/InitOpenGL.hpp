@@ -3,10 +3,13 @@
 
 class InitOpenGL {
 public:
-  static void initialize();
+  static void initializeGlfw();
+  static void initializeGlad();
+  static void initializeSettings();
 
 private:
-  static bool IsInitialized;
+  static bool GlfwIsInitialized;
+  static bool GladIsInitialized;
 };
 
 #endif

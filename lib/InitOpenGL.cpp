@@ -6,10 +6,11 @@
 #include <GLFW/glfw3.h>
 #include <stb_image/stb_image.h>
 
-bool InitOpenGL::IsInitialized = false;
+bool InitOpenGL::GlfwIsInitialized = false;
+bool InitOpenGL::GladIsInitialized = false;
 
-void InitOpenGL::initialize() {
-  if (IsInitialized) {
+void InitOpenGL::initializeGlfw() {
+  if (GlfwIsInitialized) {
     return;
   }
 
@@ -23,12 +24,24 @@ void InitOpenGL::initialize() {
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
+  GlfwIsInitialized = true;
+}
+
+void InitOpenGL::initializeGlad() {
+  if (GladIsInitialized) {
+    return;
+  }
+
   // glad
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
     std::cout << "Failed to initialise GLAD" << std::endl;
     abort();
   }
 
+  GladIsInitialized = true;
+}
+
+void InitOpenGL::initializeSettings() {
   // settings
   glClearColor(0.3f, 0.4f, 0.4f, 1.0f);
   glEnable(GL_DEPTH_TEST);
@@ -46,7 +59,4 @@ void InitOpenGL::initialize() {
 
   // anti aliasing
   glEnable(GL_MULTISAMPLE);
-
-  // initialization finished
-  IsInitialized = true;
 }

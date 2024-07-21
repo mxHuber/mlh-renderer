@@ -1,18 +1,23 @@
 #include "Exrend2D.hpp"
+#include "QuadGenerator.hpp"
+#include <iostream>
 
 // settings
 const unsigned int WindowWidth = 800;
 const unsigned int WindowHeight = 600;
 
 int main() {
+  // TODO: third float in position is currently not used.
+  // Find out if it can be used for layering, aka determine what should render
+  // infront, if there are overlapping sprites
+
+  std::cout << "Creating Exrend2D obj" << std::endl;
   Exrend2D App = Exrend2D();
 
-  // TODO: set up git WITHOUT LOSING ALL PROGRESS!!!
+  std::cout << "Adding Quad" << std::endl;
+  App.addQuad(QuadGenerator::getQuad());
 
-  // TODO:
-  // App.addQuad();
-  // App.addQuad();
-
+  std::cout << "Run loop" << std::endl;
   App.runLoop();
 
   return 0;

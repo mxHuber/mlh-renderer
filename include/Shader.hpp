@@ -7,7 +7,8 @@ struct Shader {
   unsigned int ID;
 
   Shader();
-  Shader(const char *vertexShaderPath, const char *fragmentShaderPath);
+  Shader(const std::string &vertexShaderPath,
+         const std::string &fragmentShaderPath);
   ~Shader();
   void use();
 

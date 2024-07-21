@@ -6,7 +6,8 @@
 // then glfw afterwards
 #include <GLFW/glfw3.h>
 
-RectangleRenderer::RectangleRenderer() {
+RectangleRenderer::RectangleRenderer(Shader &Shader) : RecShader(Shader) {
+  std::cout << "setting up samplers" << std::endl;
   // setup samplers in the fragment shader
   RecShader.use();
   auto Loc = glGetUniformLocation(RecShader.ID, "textures");
@@ -15,6 +16,7 @@ RectangleRenderer::RectangleRenderer() {
     Samplers[i] = i;
   glUniform1iv(Loc, 16, Samplers);
 
+  std::cout << "setting up white texture" << std::endl;
   /*
           In the shader we always mix a texture with a
           color, so we can always draw textures and tint
@@ -52,6 +54,7 @@ RectangleRenderer::RectangleRenderer() {
     }
   }
 
+  std::cout << "initializing renderer" << std::endl;
   // initialisation
   glGenVertexArrays(1, &VAO);
   glBindVertexArray(VAO);
@@ -93,15 +96,15 @@ float RectangleRenderer::createTexture(const std::string &Path) {
   abort();
 }
 
-void RectangleRenderer::addToBatch(std::array<Vertex, 4> Quad) {
+void RectangleRenderer::addToBatch(const Quad &ToAdd) {
   if (VerticesIndex >= MaxQuads - 4) {
     drawBatch();
   }
 
-  Vertices[VerticesIndex++] = Quad[0];
-  Vertices[VerticesIndex++] = Quad[1];
-  Vertices[VerticesIndex++] = Quad[2];
-  Vertices[VerticesIndex++] = Quad[3];
+  Vertices[VerticesIndex++] = ToAdd.A;
+  Vertices[VerticesIndex++] = ToAdd.B;
+  Vertices[VerticesIndex++] = ToAdd.C;
+  Vertices[VerticesIndex++] = ToAdd.D;
 
   // For every 4 vertices we have 6 indices
   IndicesCounter += 6;

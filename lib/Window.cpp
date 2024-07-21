@@ -1,5 +1,5 @@
 #include "Window.hpp"
-#include <GLFW/glfw3.h>
+#include "InitOpenGL.hpp"
 #include <iostream>
 
 // glfw: whenever the window size changed (by OS or user resize) this callback
@@ -21,6 +21,10 @@ void processInput(GLFWwindow *window) {
 
 Window::Window(int Width, int Height, const char *Name)
     : Width(Width), Height(Height), Name(Name) {
+  std::cout << "Initializing Glfw..." << std::endl;
+  InitOpenGL::initializeGlfw();
+
+  std::cout << "Creating window..." << std::endl;
   GlfwWindow = glfwCreateWindow(Width, Height, Name, NULL, NULL);
 
   if (GlfwWindow == NULL) {
@@ -29,31 +33,33 @@ Window::Window(int Width, int Height, const char *Name)
     abort();
   }
 
+  // glfwMakeContextCurrent must be called before initializing glad
   glfwMakeContextCurrent(GlfwWindow);
   glfwSetFramebufferSizeCallback(GlfwWindow, framebuffer_size_callback);
+
+  std::cout << "Initializing glad..." << std::endl;
+  InitOpenGL::initializeGlad();
+  std::cout << "Initializing settings..." << std::endl;
+  InitOpenGL::initializeSettings();
+
+  // Initialize RectangleRenderer last, because it needs glad stuff
+  RecShader = Shader(PathToVertexShader, PathToFragmentShader);
+  Renderer = RectangleRenderer(RecShader);
 }
 
 void Window::advance() {
   processInput(GlfwWindow);
+
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  for (const auto &Curr : Quads) {
+    Renderer.addToBatch(Curr);
+  }
+
+  Renderer.drawBatch();
+
   glfwSwapBuffers(GlfwWindow);
   glfwPollEvents();
-}
-
-void Window::draw() {
-  while (!glfwWindowShouldClose(GlfwWindow)) {
-    // input
-    // -----
-    processInput(GlfwWindow);
-
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
-    // etc.)
-    // -------------------------------------------------------------------------------
-    glfwSwapBuffers(GlfwWindow);
-    glfwPollEvents();
-  }
 }
 
 void Window::setShouldClose(bool ToSet) {

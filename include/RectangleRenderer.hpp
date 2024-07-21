@@ -3,6 +3,7 @@
 
 #include <array>
 
+#include "Quad.hpp"
 #include "Shader.hpp"
 #include "Vertex.hpp"
 
@@ -12,22 +13,22 @@ constexpr size_t MaxIndices = MaxQuads * 6;
 constexpr size_t MaxTextures = 16;
 
 class RectangleRenderer {
+  friend class Window;
+
 public:
-  RectangleRenderer();
+  RectangleRenderer(Shader &Shader);
 
   float createTexture(const std::string &Path);
   float createTextureJPG(const std::string &Path);
   float createTexturePNG(const std::string &Path);
 
-  void addToBatch(std::array<Vertex, 4> Quad);
+  void addToBatch(const Quad &ToAdd);
   void drawBatch();
   void resetData();
 
 private:
-  const char *PathToVertexShader = "../resources/Shaders/Vertex.shader";
-  const char *PathToFragmentShader = "../resources/Shaders/Fragment.shader";
-
-  Shader RecShader = Shader(PathToVertexShader, PathToFragmentShader);
+  RectangleRenderer() = default;
+  Shader RecShader;
 
   std::array<unsigned int, MaxTextures> TextureSlots = {};
   unsigned int TextureSlotIndex = 1;

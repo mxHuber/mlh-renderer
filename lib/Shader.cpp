@@ -8,7 +8,9 @@
 
 Shader::Shader() : ID() {}
 
-Shader::Shader(const char *vertexShaderPath, const char *fragmentShaderPath) {
+Shader::Shader(const std::string &vertexShaderPath,
+               const std::string &fragmentShaderPath) {
+  std::cout << "setting up shader" << std::endl;
   std::string vertexShaderString;
   std::string fragmentShaderString;
   FileReader::readFromFile(vertexShaderString, vertexShaderPath);
