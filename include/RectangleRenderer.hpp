@@ -16,7 +16,7 @@ class RectangleRenderer {
   friend class Window;
 
 public:
-  RectangleRenderer(Shader &Shader);
+  RectangleRenderer(Shader &Shader, int WindowWidth, int WindowHeight);
 
   float createTexture(const std::string &Path);
   float createTextureJPG(const std::string &Path);
@@ -39,6 +39,8 @@ private:
   unsigned int VAO, VBO, EBO;
   Vertex Vertices[MaxVertices] = {};
   unsigned int VerticesIndex = 0, IndicesCounter = 0;
+  int WindowWidth = 800;
+  int WindowHeight = 600;
 };
 
 #endif

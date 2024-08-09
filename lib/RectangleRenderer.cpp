@@ -6,8 +6,10 @@
 // then glfw afterwards
 #include <GLFW/glfw3.h>
 
-RectangleRenderer::RectangleRenderer(Shader &Shader) : RecShader(Shader) {
-  std::cout << "setting up samplers" << std::endl;
+RectangleRenderer::RectangleRenderer(Shader &Shader, int WindowWidth,
+                                     int WindowHeight)
+    : RecShader(Shader), WindowWidth(WindowWidth), WindowHeight(WindowHeight) {
+  std::cout << "Setting up samplers" << std::endl;
   // setup samplers in the fragment shader
   RecShader.use();
   auto Loc = glGetUniformLocation(RecShader.ID, "textures");
@@ -16,7 +18,7 @@ RectangleRenderer::RectangleRenderer(Shader &Shader) : RecShader(Shader) {
     Samplers[i] = i;
   glUniform1iv(Loc, 16, Samplers);
 
-  std::cout << "setting up white texture" << std::endl;
+  std::cout << "Setting up white texture" << std::endl;
   /*
           In the shader we always mix a texture with a
           color, so we can always draw textures and tint
@@ -54,7 +56,7 @@ RectangleRenderer::RectangleRenderer(Shader &Shader) : RecShader(Shader) {
     }
   }
 
-  std::cout << "initializing renderer" << std::endl;
+  std::cout << "Initializing renderer" << std::endl;
   // initialisation
   glGenVertexArrays(1, &VAO);
   glBindVertexArray(VAO);
@@ -112,6 +114,9 @@ void RectangleRenderer::addToBatch(const Quad &ToAdd) {
 
 void RectangleRenderer::drawBatch() {
   RecShader.use();
+
+  RecShader.setFloat("windowWidth", WindowWidth);
+  RecShader.setFloat("windowWidth", WindowHeight);
 
   for (unsigned int i = 0; i < TextureSlotIndex; i++) {
     glBindTextureUnit(i, TextureSlots[i]);

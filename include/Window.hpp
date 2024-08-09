@@ -2,6 +2,7 @@
 #define EXREND2D_WINDOW_HPP
 
 #include "Quad.hpp"
+#include "QuadButton.hpp"
 #include "RectangleRenderer.hpp"
 #include <string>
 #include <vector>
@@ -35,6 +36,7 @@ private:
   Shader RecShader;
   RectangleRenderer Renderer = RectangleRenderer();
   std::vector<Quad> Quads = {};
+  std::vector<QuadButton> QuadButtons = {};
 };
 
 #endif
