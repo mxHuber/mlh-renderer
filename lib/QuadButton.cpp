@@ -21,30 +21,9 @@ QuadButton::QuadButton(const Quad &ClickableArea, int &WindowWidth,
   BottomBoundary =
       std::max(ClickableArea.A.Position[1], ClickableArea.B.Position[1]) +
       ClickableArea.D.Position[1] / WindowWidth;
-
-  std::cout << "A: " << ClickableArea.A.Position[0] << ", "
-            << ClickableArea.A.Position[1] << std::endl;
-  std::cout << "B: " << ClickableArea.B.Position[0] << ", "
-            << ClickableArea.B.Position[1] << std::endl;
-  std::cout << " C: " << ClickableArea.C.Position[0] << ", "
-            << ClickableArea.C.Position[1] << std::endl;
-  std::cout << " D: " << ClickableArea.D.Position[0] << ", "
-            << ClickableArea.D.Position[1] << std::endl;
-
-  std::cout << "Top: " << TopBoundary << "\n"
-            << "Bottom: " << BottomBoundary << "\n"
-            << "Left: " << LeftBoundary << "\n"
-            << "Right: " << RightBoundary << "\n"
-            << std::endl;
 }
 
-const bool QuadButton::checkClick(float XPos, float YPos) const {
-  if (XPos > LeftBoundary && XPos < RightBoundary && YPos > BottomBoundary &&
-      YPos < TopBoundary) {
-    std::cout << "XPos: " << XPos << "\n"
-              << "YPos: " << YPos << "\n"
-              << std::endl;
-  }
+const bool QuadButton::checkBounds(float XPos, float YPos) const {
   return XPos > LeftBoundary && XPos < RightBoundary && YPos > BottomBoundary &&
          YPos < TopBoundary;
 }

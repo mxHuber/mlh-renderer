@@ -13,11 +13,8 @@ void main()
 {
 	fColor = aColor;
 	fTexCoords = aTexCoord;
-	// OpenGL defines the viewspace between -1.0 and 1.0, because... why
-	// not? :))
+	// OpenGL defines the viewspace between -1.0 and 1.0
 	// vec2 transformedPos = (vec2(aPos.x, aPos.y) - vec2(0.5, 0.5))* 2.0 to make it between 0.0 and 1.0
-	// Oh and glfw's mouse coords have the origin (0, 0) on the top left Why
-	// though...?
 	vec2 transformedPos = (vec2(aPos.x, aPos.y) - vec2(0.5, 0.5))* 2.0;
 	gl_Position = vec4(transformedPos, aPos.z, 1.0); 
 	// gl_Position = vec4(aPos, 1.0);

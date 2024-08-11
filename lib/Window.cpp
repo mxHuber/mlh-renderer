@@ -1,5 +1,7 @@
 #include "Window.hpp"
 #include "InitOpenGL.hpp"
+#include "Keys.hpp"
+#include "MouseButtons.hpp"
 #include "Quad.hpp"
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -13,9 +15,30 @@ void framebuffer_size_callback(GLFWwindow *Window, int Width, int Height) {
   glViewport(0, 0, Width, Height);
 }
 
+void key_callback(GLFWwindow *Window, int Key, int Scancode, int Action,
+                  int mods) {
+  if (Key == GLFW_KEY_ESCAPE && Action == GLFW_PRESS)
+    glfwSetWindowShouldClose(Window, true);
+
+  if (Key >= 0 && Key < 1024) {
+    if (Action == GLFW_PRESS)
+      Keys::keys[Key] = true;
+    else if (Action == GLFW_RELEASE)
+      Keys::keys[Key] = false;
+  }
+}
+
 void mouse_button_callback(GLFWwindow *Window, int Button, int Action,
                            int Mods) {
-  if (true) {
+  if (Button == GLFW_MOUSE_BUTTON_LEFT && Action == GLFW_PRESS) {
+    MouseButtons::LeftMousePressed = true;
+  } else if (Button == GLFW_MOUSE_BUTTON_LEFT && Action == GLFW_RELEASE) {
+    MouseButtons::LeftMousePressed = false;
+  }
+  if (Button == GLFW_MOUSE_BUTTON_RIGHT) {
+    MouseButtons::RightMousePressed = true;
+  } else if (Button == GLFW_MOUSE_BUTTON_RIGHT && Action == GLFW_RELEASE) {
+    MouseButtons::RightMousePressed = false;
   }
 }
 
@@ -52,6 +75,8 @@ Window::Window(int Width, int Height, const char *Name)
   // glfwMakeContextCurrent must be called before initializing glad
   glfwMakeContextCurrent(GlfwWindow);
   glfwSetFramebufferSizeCallback(GlfwWindow, framebuffer_size_callback);
+  glfwSetKeyCallback(GlfwWindow, key_callback);
+  glfwSetMouseButtonCallback(GlfwWindow, mouse_button_callback);
   glfwSetCursorPosCallback(GlfwWindow, cursor_position_callback);
 
   std::cout << "Initializing glad..." << std::endl;
@@ -81,31 +106,16 @@ int Threshold = 100;
 void Window::advance() {
   processInput(GlfwWindow);
 
-  if (Counter > Threshold) {
-    std::cout << "X: " << XMousePos << " Y: " << YMousePos << std::endl;
-    std::cout << "Width: " << Width << " Height: " << Height << std::endl;
-    std::cout << "x/w: " << XMousePos / Width << " y/h: " << YMousePos / Height
-              << std::endl;
-    Threshold += 100;
-  }
-  Counter++;
-
-  int WindowXPos;
-  int WindowYPos;
-  glfwGetWindowPos(GlfwWindow, &WindowXPos, &WindowYPos);
-
   for (const auto &Curr : QuadButtons) {
-    // glfw's mouse coords have the origin (0, 0) on the top left Why
-    // though...?
-    // (Height - YMousePos) / Height
-    // so the user can set their object coords like a sensible human being with
-    // the origin on the bottom left
-    // Oh and OpenGL defines the viewspace between -1.0 and 1.0, because... why
-    // not? :))
-    if (Curr.checkClick(XMousePos / Width, (Height - YMousePos) / Height)) {
-      std::cout << "Button was clicked!" << std::endl;
-    }
     Renderer.addToBatch(Curr.getQuad());
+    // glfw's mouse coords have the origin (0, 0) on the top left
+    // (Height - YMousePos) / Height
+    // so the origin is on the bottom left
+    if (MouseButtons::LeftMousePressed) {
+      if (Curr.checkBounds(XMousePos / Width, (Height - YMousePos) / Height)) {
+        std::cout << "Button was clicked!" << std::endl;
+      }
+    }
   }
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

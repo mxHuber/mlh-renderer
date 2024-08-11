@@ -7,7 +7,7 @@ class QuadButton {
 public:
   QuadButton(const Quad &ClickableArea, int &WindowWidth, int &WindowHeight);
 
-  const bool checkClick(float XPos, float YPos) const;
+  const bool checkBounds(float XPos, float YPos) const;
 
   inline const Quad &getQuad() const { return ClickableArea; }
 
