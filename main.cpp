@@ -11,8 +11,7 @@ int main() {
   // Find out if it can be used for layering, aka determine what should render
   // infront, if there are overlapping sprites
 
-  // BUG: opengl space is -1 to 1, buttens use mousepos / screenspace, which is
-  // a number between 0 and 1
+  // TODO: add namespaces. For example 'exr' or 'er2'
 
   std::cout << "Creating Exrend2D obj" << std::endl;
   Exrend2D App = Exrend2D();

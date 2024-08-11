@@ -1,5 +1,5 @@
 #include "QuadButton.hpp"
-#include <iostream>
+#include <algorithm>
 
 QuadButton::QuadButton(const Quad &ClickableArea, int &WindowWidth,
                        int &WindowHeight)
