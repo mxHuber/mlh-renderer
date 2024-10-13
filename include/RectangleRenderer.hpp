@@ -1,5 +1,5 @@
-#ifndef EXREND2D_RECTANGLE_RENDERER_HPP
-#define EXREND2D_RECTANGLE_RENDERER_HPP
+#ifndef MLH_RENDERER_RECTANGLE_RENDERER_HPP
+#define MLH_RENDERER_RECTANGLE_RENDERER_HPP
 
 #include <array>
 
@@ -7,16 +7,17 @@
 #include "Shader.hpp"
 #include "Vertex.hpp"
 
+namespace mlh {
+
 constexpr size_t MaxQuads = 8192;
 constexpr size_t MaxVertices = MaxQuads * 4;
 constexpr size_t MaxIndices = MaxQuads * 6;
 constexpr size_t MaxTextures = 16;
 
 class RectangleRenderer {
-  friend class Window;
-
 public:
-  RectangleRenderer(Shader &Shader, int WindowWidth, int WindowHeight);
+  RectangleRenderer() = default;
+  RectangleRenderer(int WindowWidth, int WindowHeight);
 
   float createTexture(const std::string &Path);
   float createTextureJPG(const std::string &Path);
@@ -27,8 +28,7 @@ public:
   void resetData();
 
 private:
-  RectangleRenderer() = default;
-  Shader RecShader;
+  Shader RecShader = Shader();
 
   std::array<unsigned int, MaxTextures> TextureSlots = {};
   unsigned int TextureSlotIndex = 1;
@@ -42,5 +42,7 @@ private:
   int WindowWidth = 800;
   int WindowHeight = 600;
 };
+
+} // namespace mlh
 
 #endif

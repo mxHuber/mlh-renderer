@@ -3,6 +3,8 @@
 #include <iostream>
 #include <sstream>
 
+namespace mlh {
+
 void FileReader::readFromFile(std::string &ContainerForInput,
                               const std::string &FileDirectory) {
   std::ifstream InputStream(FileDirectory);
@@ -13,3 +15,5 @@ void FileReader::readFromFile(std::string &ContainerForInput,
   Buffer << InputStream.rdbuf();
   ContainerForInput = Buffer.str();
 }
+
+} // namespace mlh

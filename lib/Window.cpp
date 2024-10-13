@@ -3,8 +3,11 @@
 #include "Keys.hpp"
 #include "MouseButtons.hpp"
 #include "Quad.hpp"
+#include "Shader.hpp"
 #include <GLFW/glfw3.h>
 #include <iostream>
+
+namespace mlh {
 
 // glfw: whenever the window size changed (by OS or user resize) this callback
 // function executes
@@ -60,6 +63,7 @@ void processInput(GLFWwindow *window) {
 
 Window::Window(int Width, int Height, const char *Name)
     : Width(Width), Height(Height), Name(Name) {
+
   std::cout << "Initializing Glfw..." << std::endl;
   InitOpenGL::initializeGlfw();
 
@@ -84,9 +88,13 @@ Window::Window(int Width, int Height, const char *Name)
   std::cout << "Initializing settings..." << std::endl;
   InitOpenGL::initializeSettings();
 
+  // Shader can only be created if a context current is set
+  // That is why Renderer is only fully set here, as it has a Shader class
+  // variable
+  Renderer = RectangleRenderer(800, 600);
+
   // Initialize RectangleRenderer last, because it needs glad stuff
-  RecShader = Shader(PathToVertexShader, PathToFragmentShader);
-  Renderer = RectangleRenderer(RecShader, Width, Height);
+  Renderer = RectangleRenderer(Width, Height);
 
   Vertex TestA = {0.2f, 0.2f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f};
   Vertex TestB = {0.4f, 0.2f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f};
@@ -135,3 +143,5 @@ void Window::setShouldClose(bool ToSet) {
 }
 
 bool Window::shouldClose() { return glfwWindowShouldClose(GlfwWindow); }
+
+} // namespace mlh

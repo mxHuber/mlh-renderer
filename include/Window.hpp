@@ -1,5 +1,5 @@
-#ifndef EXREND2D_WINDOW_HPP
-#define EXREND2D_WINDOW_HPP
+#ifndef MLH_RENDERER_WINDOW_HPP
+#define MLH_RENDERER_WINDOW_HPP
 
 #include "Quad.hpp"
 #include "QuadButton.hpp"
@@ -12,9 +12,11 @@
 // then glfw afterwards
 #include <GLFW/glfw3.h>
 
+namespace mlh {
+
 class Window {
-  //
 public:
+  Window() = default;
   Window(int Width, int Height, const char *Name);
 
   void advance();
@@ -28,15 +30,13 @@ private:
   int Width = 800;
   int Height = 600;
   std::string Name;
-  GLFWwindow *GlfwWindow;
+  GLFWwindow *GlfwWindow = nullptr;
 
-  const std::string PathToVertexShader = "../resources/Shaders/Vertex.shader";
-  const std::string PathToFragmentShader =
-      "../resources/Shaders/Fragment.shader";
-  Shader RecShader;
   RectangleRenderer Renderer = RectangleRenderer();
   std::vector<Quad> Quads = {};
   std::vector<QuadButton> QuadButtons = {};
 };
+
+} // namespace mlh
 
 #endif

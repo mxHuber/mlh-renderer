@@ -1,7 +1,9 @@
-#ifndef EXREND2D_QUAD_GENERATOR_HPP
-#define EXREND2D_QUAD_GENERATOR_HPP
+#ifndef MLH_RENDERER_QUAD_GENERATOR_HPP
+#define MLH_RENDERER_QUAD_GENERATOR_HPP
 
 #include "Quad.hpp"
+
+namespace mlh {
 
 class QuadGenerator {
 public:
@@ -14,5 +16,7 @@ private:
   static Vertex D;
   static Quad BasicQuad;
 };
+
+} // namespace mlh
 
 #endif

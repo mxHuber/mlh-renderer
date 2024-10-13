@@ -1,5 +1,7 @@
-#ifndef EXREND2D_INIT_OPENGL_HPP
-#define EXREND2D_INIT_OPENGL_HPP
+#ifndef MLH_RENDERER_INIT_OPENGL_HPP
+#define MLH_RENDERER_INIT_OPENGL_HPP
+
+namespace mlh {
 
 class InitOpenGL {
 public:
@@ -11,5 +13,7 @@ private:
   static bool GlfwIsInitialized;
   static bool GladIsInitialized;
 };
+
+} // namespace mlh
 
 #endif

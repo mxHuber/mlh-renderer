@@ -1,7 +1,9 @@
-#ifndef EXREND2D_SHADER_HPP
-#define EXREND2D_SHADER_HPP
+#ifndef MLH_RENDERER_SHADER_HPP
+#define MLH_RENDERER_SHADER_HPP
 
 #include <string>
+
+namespace mlh {
 
 struct Shader {
   unsigned int ID;
@@ -26,5 +28,7 @@ struct Shader {
 #endif
   void setSampler2D(const std::string &name, const unsigned int &value) const;
 };
+
+} // namespace mlh
 
 #endif

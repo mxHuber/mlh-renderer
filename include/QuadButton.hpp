@@ -1,7 +1,9 @@
-#ifndef EXREND2D_QUAD_BUTTON_HPP
-#define EXREND2D_QUAD_BUTTON_HPP
+#ifndef MLH_RENDERER_QUAD_BUTTON_HPP
+#define MLH_RENDERER_QUAD_BUTTON_HPP
 
 #include "Quad.hpp"
+
+namespace mlh {
 
 class QuadButton {
 public:
@@ -22,5 +24,7 @@ private:
   int &WindowWidth;
   int &WindowHeight;
 };
+
+} // namespace mlh
 
 #endif

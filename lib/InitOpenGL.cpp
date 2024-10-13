@@ -6,6 +6,8 @@
 #include <GLFW/glfw3.h>
 #include <stb_image/stb_image.h>
 
+namespace mlh {
+
 bool InitOpenGL::GlfwIsInitialized = false;
 bool InitOpenGL::GladIsInitialized = false;
 
@@ -60,3 +62,5 @@ void InitOpenGL::initializeSettings() {
   // anti aliasing
   glEnable(GL_MULTISAMPLE);
 }
+
+} // namespace mlh

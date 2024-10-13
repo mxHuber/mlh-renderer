@@ -6,11 +6,12 @@
 
 #include "glad/glad.h"
 
+namespace mlh {
+
 Shader::Shader() : ID() {}
 
 Shader::Shader(const std::string &vertexShaderPath,
                const std::string &fragmentShaderPath) {
-  std::cout << "Setting up shader" << std::endl;
   std::string vertexShaderString;
   std::string fragmentShaderString;
   FileReader::readFromFile(vertexShaderString, vertexShaderPath);
@@ -103,3 +104,5 @@ void Shader::setSampler2D(const std::string &name,
                           const unsigned int &value) const {
   glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 }
+
+} // namespace mlh

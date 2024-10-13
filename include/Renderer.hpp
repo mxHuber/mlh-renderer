@@ -1,12 +1,14 @@
-#ifndef EXREND2D_EXREND2D_HPP
-#define EXREND2D_EXREND2D_HPP
+#ifndef MLH_RENDERER_HPP
+#define MLH_RENDERER_HPP
 
 #include "Window.hpp"
 
-class Exrend2D {
+namespace mlh {
+
+class Renderer {
 public:
-  Exrend2D();
-  ~Exrend2D();
+  Renderer();
+  ~Renderer();
 
   void runLoop();
   void stop();
@@ -15,8 +17,10 @@ public:
   void addQuad(const Quad &ToAdd) { MainWindow.addQuad(ToAdd); }
 
 private:
-  Window MainWindow = Window(800, 600, "Exrend2D");
+  Window MainWindow = Window();
   bool Close = false;
 };
+
+} // namespace mlh
 
 #endif

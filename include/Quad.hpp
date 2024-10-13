@@ -1,7 +1,9 @@
-#ifndef EXREND2D_QUAD_HPP
-#define EXREND2D_QUAD_HPP
+#ifndef MLH_RENDERER_QUAD_HPP
+#define MLH_RENDERER_QUAD_HPP
 
 #include "Vertex.hpp"
+
+namespace mlh {
 
 struct Quad {
   Vertex A;
@@ -9,5 +11,7 @@ struct Quad {
   Vertex C;
   Vertex D;
 };
+
+} // namespace mlh
 
 #endif

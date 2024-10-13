@@ -1,6 +1,8 @@
 #include "QuadButton.hpp"
 #include <algorithm>
 
+namespace mlh {
+
 QuadButton::QuadButton(const Quad &ClickableArea, int &WindowWidth,
                        int &WindowHeight)
     : WindowWidth(WindowWidth), WindowHeight(WindowHeight),
@@ -27,3 +29,5 @@ const bool QuadButton::checkBounds(float XPos, float YPos) const {
   return XPos > LeftBoundary && XPos < RightBoundary && YPos > BottomBoundary &&
          YPos < TopBoundary;
 }
+
+} // namespace mlh

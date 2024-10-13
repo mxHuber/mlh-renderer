@@ -1,6 +1,5 @@
-#include "Exrend2D.hpp"
 #include "QuadGenerator.hpp"
-#include <iostream>
+#include "Renderer.hpp"
 
 // settings
 const unsigned int WindowWidth = 800;
@@ -11,15 +10,10 @@ int main() {
   // Find out if it can be used for layering, aka determine what should render
   // infront, if there are overlapping sprites
 
-  // TODO: add namespaces. For example 'exr' or 'er2'
+  mlh::Renderer App = mlh::Renderer();
 
-  std::cout << "Creating Exrend2D obj" << std::endl;
-  Exrend2D App = Exrend2D();
+  App.addQuad(mlh::QuadGenerator::getQuad());
 
-  std::cout << "Adding Quad" << std::endl;
-  App.addQuad(QuadGenerator::getQuad());
-
-  std::cout << "Run loop" << std::endl;
   App.runLoop();
 
   return 0;
