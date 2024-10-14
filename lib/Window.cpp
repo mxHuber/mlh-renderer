@@ -3,6 +3,7 @@
 #include "Keys.hpp"
 #include "MouseButtons.hpp"
 #include "Quad.hpp"
+#include "RectangleRenderer.hpp"
 #include "Shader.hpp"
 #include <GLFW/glfw3.h>
 #include <iostream>
@@ -143,5 +144,9 @@ void Window::setShouldClose(bool ToSet) {
 }
 
 bool Window::shouldClose() { return glfwWindowShouldClose(GlfwWindow); }
+
+void Window::setShader(const std::string &Vertex, const std::string &Fragment) {
+  Renderer.setShader(Vertex, Fragment);
+}
 
 } // namespace mlh

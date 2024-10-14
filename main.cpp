@@ -12,6 +12,8 @@ int main() {
 
   mlh::Renderer App = mlh::Renderer();
 
+  App.setShader("../resources/Shaders/Vertex.shader",
+                "../resources/Shaders/Fragment.shader");
   App.addQuad(mlh::QuadGenerator::getQuad());
 
   App.runLoop();

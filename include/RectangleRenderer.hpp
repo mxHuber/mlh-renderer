@@ -27,6 +27,8 @@ public:
   void drawBatch();
   void resetData();
 
+  void setShader(const std::string &Vertex, const std::string &Fragment);
+
 private:
   Shader RecShader = Shader();
 

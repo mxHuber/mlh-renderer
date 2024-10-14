@@ -200,4 +200,10 @@ float RectangleRenderer::createTexturePNG(const std::string &Path) {
   return (float)TextureSlotIndex++;
 }
 
+void RectangleRenderer::setShader(const std::string &Vertex,
+                                  const std::string &Fragment) {
+  RecShader = Shader(Vertex, Fragment);
+  std::cout << "Shader set!" << std::endl;
+}
+
 } // namespace mlh

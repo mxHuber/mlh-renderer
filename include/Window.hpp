@@ -23,6 +23,8 @@ public:
   void setShouldClose(bool ToSet);
   bool shouldClose();
 
+  void setShader(const std::string &Vertex, const std::string &Fragment);
+
   inline void addQuad(const Quad &ToAdd) { Quads.push_back(ToAdd); }
   inline void clearQuads() { Quads.clear(); }
 

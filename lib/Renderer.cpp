@@ -27,4 +27,9 @@ void Renderer::stop() {
   MainWindow.setShouldClose(true);
 }
 
+void Renderer::setShader(const std::string &Vertex,
+                         const std::string &Fragment) {
+  MainWindow.setShader(Vertex, Fragment);
+}
+
 } // namespace mlh

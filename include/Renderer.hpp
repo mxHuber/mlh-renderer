@@ -15,6 +15,7 @@ public:
   void start();
 
   void addQuad(const Quad &ToAdd) { MainWindow.addQuad(ToAdd); }
+  void setShader(const std::string &Vertex, const std::string &Fragment);
 
 private:
   Window MainWindow = Window();
