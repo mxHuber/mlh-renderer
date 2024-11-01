@@ -10,8 +10,7 @@ namespace mlh {
 
 RectangleRenderer::RectangleRenderer(int WindowWidth, int WindowHeight)
     : WindowWidth(WindowWidth), WindowHeight(WindowHeight) {
-  RecShader = Shader("../resources/Shaders/Vertex.shader",
-                     "../resources/Shaders/Fragment.shader");
+  RecShader = Shader();
   // setup samplers in the fragment shader
   RecShader.use();
   auto Loc = glGetUniformLocation(RecShader.ID, "textures");
