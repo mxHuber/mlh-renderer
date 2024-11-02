@@ -114,6 +114,7 @@ int Threshold = 100;
 
 void Window::advance() {
   processInput(GlfwWindow);
+  glfwGetWindowSize(GlfwWindow, &Width, &Height);
 
   for (const auto &Curr : QuadButtons) {
     Renderer.addToBatch(Curr.getQuad());
