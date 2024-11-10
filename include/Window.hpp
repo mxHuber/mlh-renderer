@@ -28,6 +28,10 @@ public:
   inline void addQuad(const Quad &ToAdd) { Quads.push_back(ToAdd); }
   inline void clearQuads() { Quads.clear(); }
 
+  inline void createTexture(const std::string &Path) {
+    Renderer.createTexture(Path);
+  };
+
 private:
   int Width = 800;
   int Height = 600;

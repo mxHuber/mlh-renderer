@@ -14,7 +14,8 @@ int main() {
 
   App.setShader("../resources/Shaders/Vertex.shader",
                 "../resources/Shaders/Fragment.shader");
-  App.addQuad(mlh::QuadGenerator::getQuad());
+  App.addQuad(mlh::QuadGenerator::getBasicQuad());
+  App.addQuad(mlh::QuadGenerator::getRandomQuad());
 
   App.runLoop();
 

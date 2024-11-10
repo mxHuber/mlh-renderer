@@ -89,12 +89,20 @@ RectangleRenderer::RectangleRenderer(int WindowWidth, int WindowHeight)
 }
 
 float RectangleRenderer::createTexture(const std::string &Path) {
-  // TODO: find out what type of image it is (png, jpg)
-  // TODO: call correct function for it or print appropriate errors
-  // TODO: make createTexturePNG etc private
-  std::cout << "[RectangleRenderer::createTexture]: not implemented yet"
-            << std::endl;
-  abort();
+  float TextureIndex = 0;
+
+  if (Path.substr(Path.length() - 5, Path.length() - 1) == ".png") {
+    TextureIndex = createTexturePNG(Path);
+  } else if ((Path.substr(Path.length() - 5, Path.length() - 1) == ".jpg") ||
+             (Path.substr(Path.length() - 6, Path.length() - 1) == ".jpeg")) {
+    TextureIndex = createTextureJPG(Path);
+  } else {
+    std::cout
+        << "[RectangleRenderer::createTexture]: file extension not supported."
+        << std::endl;
+  }
+
+  return TextureIndex;
 }
 
 void RectangleRenderer::addToBatch(const Quad &ToAdd) {

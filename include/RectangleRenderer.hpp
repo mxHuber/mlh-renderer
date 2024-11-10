@@ -20,8 +20,6 @@ public:
   RectangleRenderer(int WindowWidth, int WindowHeight);
 
   float createTexture(const std::string &Path);
-  float createTextureJPG(const std::string &Path);
-  float createTexturePNG(const std::string &Path);
 
   void addToBatch(const Quad &ToAdd);
   void drawBatch();
@@ -43,6 +41,9 @@ private:
   unsigned int VerticesIndex = 0, IndicesCounter = 0;
   int WindowWidth = 800;
   int WindowHeight = 600;
+
+  float createTextureJPG(const std::string &Path);
+  float createTexturePNG(const std::string &Path);
 };
 
 } // namespace mlh
