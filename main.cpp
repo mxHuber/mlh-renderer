@@ -15,7 +15,14 @@ int main() {
   App.setShader("../resources/Shaders/Vertex.shader",
                 "../resources/Shaders/Fragment.shader");
   App.addQuad(mlh::QuadGenerator::getBasicQuad());
-  App.addQuad(mlh::QuadGenerator::getRandomQuad());
+  // App.addQuad(mlh::QuadGenerator::getRandomQuad());
+  // float BackgroundImageID =
+  //    App.createTexture("../resources/Textures/test64x64.png");
+  // float BackgroundImageID =
+  //    App.createTexture("../resources/Textures/BackgroundImage.png");
+  float BackgroundImageID =
+      App.createTexture("../resources/Textures/BackgroundImage.jpg");
+  App.setBackground(BackgroundImageID);
 
   App.runLoop();
 

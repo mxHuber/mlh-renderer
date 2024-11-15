@@ -12,6 +12,9 @@ struct Shader {
   Shader(const std::string &vertexShaderPath,
          const std::string &fragmentShaderPath);
   ~Shader();
+
+  bool isDefault = true;
+
   void use();
 
   // utility uniform functions

@@ -1,19 +1,82 @@
 #include "RectangleRenderer.hpp"
 #include <iostream>
-#include <stb_image/stb_image.h>
 // glad must be included first
 #include <glad/glad.h>
 // then glfw afterwards
 #include <GLFW/glfw3.h>
+#include <stb_image/stb_image.h>
 
 namespace mlh {
 
 RectangleRenderer::RectangleRenderer(int WindowWidth, int WindowHeight)
     : WindowWidth(WindowWidth), WindowHeight(WindowHeight) {
-  RecShader = Shader();
+  if (!RecShader.isDefault) {
+    init();
+  }
+}
+
+float RectangleRenderer::createTexture(const std::string &Path) {
+  float TextureIndex = 0;
+
+  if (Path.substr(Path.length() - 4, Path.length() - 1) == ".png") {
+    TextureIndex = createTexturePNG(Path);
+  } else if ((Path.substr(Path.length() - 4, Path.length() - 1) == ".jpg") ||
+             (Path.substr(Path.length() - 5, Path.length() - 1) == ".jpeg")) {
+    TextureIndex = createTextureJPG(Path);
+  } else {
+    std::cout
+        << "[RectangleRenderer::createTexture]: file extension not supported."
+        << std::endl;
+  }
+
+  return TextureIndex;
+}
+
+void RectangleRenderer::addToBatch(const Quad &ToAdd) {
+  if (VerticesIndex >= MaxQuads - 4) {
+    drawBatch();
+  }
+
+  Vertices[VerticesIndex++] = ToAdd.A;
+  Vertices[VerticesIndex++] = ToAdd.B;
+  Vertices[VerticesIndex++] = ToAdd.C;
+  Vertices[VerticesIndex++] = ToAdd.D;
+
+  // For every 4 vertices we have 6 indices
+  IndicesCounter += 6;
+}
+
+void RectangleRenderer::drawBatch() {
+  RecShader.use();
+
+  RecShader.setInt("windowWidth", WindowWidth);
+  RecShader.setInt("windowHeight", WindowHeight);
+
+  for (unsigned int i = 0; i < TextureSlotIndex; i++) {
+    glBindTextureUnit(i, TextureSlots[i]);
+  }
+
+  // Set dynamic vertex buffer
+  glBindBuffer(GL_ARRAY_BUFFER, VBO);
+  glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertices), Vertices);
+
+  glBindVertexArray(VAO);
+  glDrawElements(GL_TRIANGLES, IndicesCounter, GL_UNSIGNED_INT, 0);
+
+  VerticesIndex = 0;
+  IndicesCounter = 0;
+}
+
+void RectangleRenderer::resetData() {
+  VerticesIndex = 0;
+  IndicesCounter = 0;
+}
+
+void RectangleRenderer::init() {
   // setup samplers in the fragment shader
   RecShader.use();
-  auto Loc = glGetUniformLocation(RecShader.ID, "textures");
+  auto Loc = glGetUniformLocation(RecShader.ID, "Textures");
+
   int Samplers[16];
   for (int i = 0; i < 16; i++)
     Samplers[i] = i;
@@ -37,8 +100,9 @@ RectangleRenderer::RectangleRenderer(int WindowWidth, int WindowHeight)
                &WhiteColor);
 
   TextureSlots[0] = WhiteTexture;
-  for (int i = 1; i < MaxTextures; i++)
+  for (int i = 1; i < MaxTextures; i++) {
     TextureSlots[i] = 0;
+  }
 
   unsigned int *indices =
       (unsigned int *)malloc(MaxIndices * sizeof(unsigned int));
@@ -86,63 +150,13 @@ RectangleRenderer::RectangleRenderer(int WindowWidth, int WindowHeight)
                         (void *)offsetof(Vertex, TexCoords));
 
   free(indices);
-}
 
-float RectangleRenderer::createTexture(const std::string &Path) {
-  float TextureIndex = 0;
-
-  if (Path.substr(Path.length() - 5, Path.length() - 1) == ".png") {
-    TextureIndex = createTexturePNG(Path);
-  } else if ((Path.substr(Path.length() - 5, Path.length() - 1) == ".jpg") ||
-             (Path.substr(Path.length() - 6, Path.length() - 1) == ".jpeg")) {
-    TextureIndex = createTextureJPG(Path);
-  } else {
-    std::cout
-        << "[RectangleRenderer::createTexture]: file extension not supported."
-        << std::endl;
+  GLenum err;
+  while ((err = glGetError()) != GL_NO_ERROR) {
+    std::cerr << "[RectangleRenderer::ctor] OpenGL error: " << err << std::endl;
   }
 
-  return TextureIndex;
-}
-
-void RectangleRenderer::addToBatch(const Quad &ToAdd) {
-  if (VerticesIndex >= MaxQuads - 4) {
-    drawBatch();
-  }
-
-  Vertices[VerticesIndex++] = ToAdd.A;
-  Vertices[VerticesIndex++] = ToAdd.B;
-  Vertices[VerticesIndex++] = ToAdd.C;
-  Vertices[VerticesIndex++] = ToAdd.D;
-
-  // For every 4 vertices we have 6 indices
-  IndicesCounter += 6;
-}
-
-void RectangleRenderer::drawBatch() {
-  RecShader.use();
-
-  RecShader.setFloat("windowWidth", WindowWidth);
-  RecShader.setFloat("windowWidth", WindowHeight);
-
-  for (unsigned int i = 0; i < TextureSlotIndex; i++) {
-    glBindTextureUnit(i, TextureSlots[i]);
-  }
-
-  // Set dynamic vertex buffer
-  glBindBuffer(GL_ARRAY_BUFFER, VBO);
-  glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertices), Vertices);
-
-  glBindVertexArray(VAO);
-  glDrawElements(GL_TRIANGLES, IndicesCounter, GL_UNSIGNED_INT, 0);
-
-  VerticesIndex = 0;
-  IndicesCounter = 0;
-}
-
-void RectangleRenderer::resetData() {
-  VerticesIndex = 0;
-  IndicesCounter = 0;
+  isInitialized = true;
 }
 
 float RectangleRenderer::createTextureJPG(const std::string &Path) {
@@ -168,7 +182,12 @@ float RectangleRenderer::createTextureJPG(const std::string &Path) {
                  GL_UNSIGNED_BYTE, Data);
     glGenerateMipmap(GL_TEXTURE_2D);
   } else {
-    std::cout << "Failed to load texture" << std::endl;
+    std::cerr << "Failed to load texture" << std::endl;
+  }
+
+  GLenum err;
+  while ((err = glGetError()) != GL_NO_ERROR) {
+    std::cerr << "[createTextureJPG] OpenGL error: " << err << std::endl;
   }
 
   stbi_image_free(Data);
@@ -195,11 +214,16 @@ float RectangleRenderer::createTexturePNG(const std::string &Path) {
   unsigned char *Data =
       stbi_load(Path.c_str(), &width, &height, &nrChannels, 0);
   if (Data) {
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA,
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA8,
                  GL_UNSIGNED_BYTE, Data);
     glGenerateMipmap(GL_TEXTURE_2D);
   } else {
     std::cout << "Failed to load texture" << std::endl;
+  }
+
+  GLenum err;
+  while ((err = glGetError()) != GL_NO_ERROR) {
+    std::cerr << "[createTexturePNG] OpenGL error: " << err << std::endl;
   }
 
   stbi_image_free(Data);
@@ -211,6 +235,10 @@ void RectangleRenderer::setShader(const std::string &Vertex,
                                   const std::string &Fragment) {
   RecShader = Shader(Vertex, Fragment);
   std::cout << "Shader set!" << std::endl;
+
+  if (!isInitialized) {
+    init();
+  }
 }
 
 } // namespace mlh

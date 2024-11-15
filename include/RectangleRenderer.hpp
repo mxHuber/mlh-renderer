@@ -42,6 +42,9 @@ private:
   int WindowWidth = 800;
   int WindowHeight = 600;
 
+  bool isInitialized = false;
+
+  void init();
   float createTextureJPG(const std::string &Path);
   float createTexturePNG(const std::string &Path);
 };

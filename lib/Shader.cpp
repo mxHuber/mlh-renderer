@@ -11,7 +11,8 @@ namespace mlh {
 Shader::Shader() : ID() {}
 
 Shader::Shader(const std::string &vertexShaderPath,
-               const std::string &fragmentShaderPath) {
+               const std::string &fragmentShaderPath)
+    : isDefault(false) {
   std::string vertexShaderString;
   std::string fragmentShaderString;
   FileReader::readFromFile(vertexShaderString, vertexShaderPath);

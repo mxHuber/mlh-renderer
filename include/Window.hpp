@@ -24,12 +24,13 @@ public:
   bool shouldClose();
 
   void setShader(const std::string &Vertex, const std::string &Fragment);
+  void setBackground(float TextureID);
 
   inline void addQuad(const Quad &ToAdd) { Quads.push_back(ToAdd); }
   inline void clearQuads() { Quads.clear(); }
 
-  inline void createTexture(const std::string &Path) {
-    Renderer.createTexture(Path);
+  inline float createTexture(const std::string &Path) {
+    return Renderer.createTexture(Path);
   };
 
 private:

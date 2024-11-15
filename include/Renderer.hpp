@@ -16,9 +16,12 @@ public:
 
   void addQuad(const Quad &ToAdd) { MainWindow.addQuad(ToAdd); }
   void setShader(const std::string &Vertex, const std::string &Fragment);
-  inline void createTexture(const std::string &Path) {
-    MainWindow.createTexture(Path);
+  inline float createTexture(const std::string &Path) {
+    return MainWindow.createTexture(Path);
   };
+  inline void setBackground(float TextureID) {
+    MainWindow.setBackground(TextureID);
+  }
 
 private:
   Window MainWindow = Window();
