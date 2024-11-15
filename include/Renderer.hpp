@@ -15,6 +15,7 @@ public:
   void start();
 
   void addQuad(const Quad &ToAdd) { MainWindow.addQuad(ToAdd); }
+  void addButton(const QuadButton &ToAdd) { MainWindow.addButton(ToAdd); }
   void setShader(const std::string &Vertex, const std::string &Fragment);
   inline float createTexture(const std::string &Path) {
     return MainWindow.createTexture(Path);

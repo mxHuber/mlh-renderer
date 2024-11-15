@@ -89,24 +89,8 @@ Window::Window(int Width, int Height, const char *Name)
   std::cout << "Initializing settings..." << std::endl;
   InitOpenGL::initializeSettings();
 
-  // Shader can only be created if a context current is set
-  // That is why Renderer is only fully set here, as it has a Shader class
-  // variable
-  Renderer = RectangleRenderer(800, 600);
-
   // Initialize RectangleRenderer last, because it needs glad stuff
   Renderer = RectangleRenderer(Width, Height);
-
-  Vertex TestA = {0.2f, 0.2f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f};
-  Vertex TestB = {0.4f, 0.2f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f};
-  Vertex TestC = {0.4f, 0.4f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f};
-  Vertex TestD = {0.2f, 0.4f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f};
-
-  Quad Test = {TestA, TestB, TestC, TestD};
-
-  QuadButton Button1 = QuadButton(std::move(Test), Width, Height);
-
-  QuadButtons.push_back(Button1);
 }
 
 int Counter = 0;

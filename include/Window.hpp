@@ -27,7 +27,11 @@ public:
   void setBackground(float TextureID);
 
   inline void addQuad(const Quad &ToAdd) { Quads.push_back(ToAdd); }
+  inline void addButton(const QuadButton &ToAdd) {
+    QuadButtons.push_back(ToAdd);
+  }
   inline void clearQuads() { Quads.clear(); }
+  inline void clearButtons() { QuadButtons.clear(); }
 
   inline float createTexture(const std::string &Path) {
     return Renderer.createTexture(Path);
