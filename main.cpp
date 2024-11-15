@@ -21,7 +21,7 @@ int main() {
   // float BackgroundImageID =
   //    App.createTexture("../resources/Textures/BackgroundImage.png");
   float BackgroundImageID =
-      App.createTexture("../resources/Textures/BackgroundImage.jpg");
+      App.createTexture("../resources/Textures/BackgroundImage.png");
   App.setBackground(BackgroundImageID);
 
   App.runLoop();

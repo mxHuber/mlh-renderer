@@ -44,6 +44,7 @@ private:
 
   bool isInitialized = false;
 
+  void checkForOpenGLErrors(const std::string &AdditionalInfo = "");
   void init();
   float createTextureJPG(const std::string &Path);
   float createTexturePNG(const std::string &Path);

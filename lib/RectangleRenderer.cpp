@@ -72,15 +72,32 @@ void RectangleRenderer::resetData() {
   IndicesCounter = 0;
 }
 
+void RectangleRenderer::checkForOpenGLErrors(
+    const std::string &AdditionalInfo) {
+  GLenum err;
+  while ((err = glGetError()) != GL_NO_ERROR) {
+    if (AdditionalInfo == "") {
+      std::cerr << "OpenGL error: " << err << std::endl;
+      continue;
+    }
+    std::cerr << "Info: " << AdditionalInfo << "\nOpenGL error: " << err
+              << std::endl;
+  }
+}
+
 void RectangleRenderer::init() {
   // setup samplers in the fragment shader
   RecShader.use();
   auto Loc = glGetUniformLocation(RecShader.ID, "Textures");
 
+  checkForOpenGLErrors("After glGetUniformLocation");
+
   int Samplers[16];
   for (int i = 0; i < 16; i++)
     Samplers[i] = i;
   glUniform1iv(Loc, 16, Samplers);
+
+  checkForOpenGLErrors("After glUniform1iv");
 
   /*
           In the shader we always mix a texture with a
@@ -98,6 +115,8 @@ void RectangleRenderer::init() {
   unsigned int WhiteColor = 0xffffffff;
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, 1, 1, 0, GL_RGBA, GL_UNSIGNED_BYTE,
                &WhiteColor);
+
+  checkForOpenGLErrors("After white texture generation");
 
   TextureSlots[0] = WhiteTexture;
   for (int i = 1; i < MaxTextures; i++) {
@@ -149,6 +168,8 @@ void RectangleRenderer::init() {
   glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex),
                         (void *)offsetof(Vertex, TexCoords));
 
+  checkForOpenGLErrors("After VertexAttrib initialization");
+
   free(indices);
 
   GLenum err;
@@ -164,6 +185,7 @@ float RectangleRenderer::createTextureJPG(const std::string &Path) {
 
   glGenTextures(1, &Texture);
   glBindTexture(GL_TEXTURE_2D, Texture);
+  checkForOpenGLErrors("[createTextureJPG]: After glBindTexture");
   TextureSlots[TextureSlotIndex] = Texture;
 
   // set the texture wrapping parameters
@@ -181,13 +203,9 @@ float RectangleRenderer::createTextureJPG(const std::string &Path) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB,
                  GL_UNSIGNED_BYTE, Data);
     glGenerateMipmap(GL_TEXTURE_2D);
+    checkForOpenGLErrors("[createTextureJPG]: After glGenerateMipmap");
   } else {
     std::cerr << "Failed to load texture" << std::endl;
-  }
-
-  GLenum err;
-  while ((err = glGetError()) != GL_NO_ERROR) {
-    std::cerr << "[createTextureJPG] OpenGL error: " << err << std::endl;
   }
 
   stbi_image_free(Data);
@@ -196,11 +214,12 @@ float RectangleRenderer::createTextureJPG(const std::string &Path) {
 }
 
 float RectangleRenderer::createTexturePNG(const std::string &Path) {
-  unsigned int texture;
+  unsigned int Texture;
 
-  glCreateTextures(GL_TEXTURE_2D, 1, &texture);
-  glBindTexture(GL_TEXTURE_2D, texture);
-  TextureSlots[TextureSlotIndex] = texture;
+  glCreateTextures(GL_TEXTURE_2D, 1, &Texture);
+  glBindTexture(GL_TEXTURE_2D, Texture);
+  checkForOpenGLErrors("[createTexturePNG]: After glBindTexture");
+  TextureSlots[TextureSlotIndex] = Texture;
 
   // set the texture wrapping parameters
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -209,21 +228,17 @@ float RectangleRenderer::createTexturePNG(const std::string &Path) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-  int width, height, nrChannels;
+  int Width, Height, NrChannels;
   // load image, create texture and generate mipmaps
   unsigned char *Data =
-      stbi_load(Path.c_str(), &width, &height, &nrChannels, 0);
+      stbi_load(Path.c_str(), &Width, &Height, &NrChannels, 0);
   if (Data) {
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA8,
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, Width, Height, 0, GL_RGBA,
                  GL_UNSIGNED_BYTE, Data);
     glGenerateMipmap(GL_TEXTURE_2D);
+    checkForOpenGLErrors("[createTexturePNG]: After glGenerateMipmap");
   } else {
     std::cout << "Failed to load texture" << std::endl;
-  }
-
-  GLenum err;
-  while ((err = glGetError()) != GL_NO_ERROR) {
-    std::cerr << "[createTexturePNG] OpenGL error: " << err << std::endl;
   }
 
   stbi_image_free(Data);
