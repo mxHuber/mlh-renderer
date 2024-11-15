@@ -23,13 +23,13 @@ int main() {
       App.createTexture("../resources/Textures/BackgroundImage.jpg");
   App.setBackground(BackgroundImageID);
 
-  mlh::Vertex TestA = {0.2f, 0.2f, -1.0f, 1.0f, 0.0f,
+  mlh::Vertex TestA = {0.4f, 0.6f, -1.0f, 1.0f, 0.0f,
                        0.0f, 1.0f, 0.0f,  0.0f, 0.0f};
-  mlh::Vertex TestB = {0.4f, 0.2f, -1.0f, 0.0f, 1.0f,
+  mlh::Vertex TestB = {0.6f, 0.6f, -1.0f, 0.0f, 1.0f,
                        0.0f, 1.0f, 1.0f,  0.0f, 0.0f};
-  mlh::Vertex TestC = {0.4f, 0.4f, -1.0f, 0.0f, 0.0f,
+  mlh::Vertex TestC = {0.6f, 0.8f, -1.0f, 0.0f, 0.0f,
                        1.0f, 0.0f, 1.0f,  1.0f, 0.0f};
-  mlh::Vertex TestD = {0.2f, 0.4f, -1.0f, 0.0f, 0.0f,
+  mlh::Vertex TestD = {0.4f, 0.8f, -1.0f, 0.0f, 0.0f,
                        0.0f, 1.0f, 0.0f,  1.0f, 0.0f};
 
   mlh::Quad Test = {TestA, TestB, TestC, TestD};
