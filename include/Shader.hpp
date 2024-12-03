@@ -5,7 +5,8 @@
 
 namespace mlh {
 
-struct Shader {
+class Shader {
+public:
   unsigned int ID;
 
   Shader();

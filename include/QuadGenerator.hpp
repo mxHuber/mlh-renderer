@@ -11,6 +11,49 @@ namespace mlh {
 class QuadGenerator {
 public:
   static Quad getBasicQuad() { return BasicQuad; }
+  static void printBasicQuadValues() {
+    std::cout << "Basic Quad:" << std::endl;
+    std::cout << "A:" << std::endl;
+    std::cout << "- Pos: (" << BasicQuad.A.Position[0] << ", "
+              << BasicQuad.A.Position[1] << ", " << BasicQuad.A.Position[2]
+              << ")" << std::endl;
+    std::cout << "- Col: (" << BasicQuad.A.Color[0] << ", "
+              << BasicQuad.A.Color[1] << ", " << BasicQuad.A.Color[2] << ", "
+              << BasicQuad.A.Color[3] << ")" << std::endl;
+    std::cout << "- Tex: (" << BasicQuad.A.TexCoords[0] << ", "
+              << BasicQuad.A.TexCoords[1] << ", " << BasicQuad.A.TexCoords[2]
+              << ")" << std::endl;
+    std::cout << "B:" << std::endl;
+    std::cout << "- Pos: (" << BasicQuad.B.Position[0] << ", "
+              << BasicQuad.B.Position[1] << ", " << BasicQuad.B.Position[2]
+              << ")" << std::endl;
+    std::cout << "- Col: (" << BasicQuad.B.Color[0] << ", "
+              << BasicQuad.B.Color[1] << ", " << BasicQuad.B.Color[2] << ", "
+              << BasicQuad.B.Color[3] << ")" << std::endl;
+    std::cout << "- Tex: (" << BasicQuad.B.TexCoords[0] << ", "
+              << BasicQuad.B.TexCoords[1] << ", " << BasicQuad.B.TexCoords[2]
+              << ")" << std::endl;
+    std::cout << "C:" << std::endl;
+    std::cout << "- Pos: (" << BasicQuad.C.Position[0] << ", "
+              << BasicQuad.C.Position[1] << ", " << BasicQuad.C.Position[2]
+              << ")" << std::endl;
+    std::cout << "- Col: (" << BasicQuad.C.Color[0] << ", "
+              << BasicQuad.C.Color[1] << ", " << BasicQuad.C.Color[2] << ", "
+              << BasicQuad.C.Color[3] << ")" << std::endl;
+    std::cout << "- Tex: (" << BasicQuad.C.TexCoords[0] << ", "
+              << BasicQuad.C.TexCoords[1] << ", " << BasicQuad.C.TexCoords[2]
+              << ")" << std::endl;
+    std::cout << "D:" << std::endl;
+    std::cout << "- Pos: (" << BasicQuad.D.Position[0] << ", "
+              << BasicQuad.D.Position[1] << ", " << BasicQuad.D.Position[2]
+              << ")" << std::endl;
+    std::cout << "- Col: (" << BasicQuad.D.Color[0] << ", "
+              << BasicQuad.D.Color[1] << ", " << BasicQuad.D.Color[2] << ", "
+              << BasicQuad.D.Color[3] << ")" << std::endl;
+    std::cout << "- Tex: (" << BasicQuad.D.TexCoords[0] << ", "
+              << BasicQuad.D.TexCoords[1] << ", " << BasicQuad.D.TexCoords[2]
+              << ")" << std::endl;
+  }
   static Quad getRandomQuad() {
     srand(static_cast<unsigned>(time(0)));
 

@@ -1,3 +1,4 @@
+#include "QuadGenerator.hpp"
 #include "Renderer.hpp"
 
 // settings
@@ -8,6 +9,9 @@ int main() {
   // TODO: third value in position is currently not used.
   // Find out if it can be used for layering, aka determine what should render
   // infront, if there are overlapping sprites
+  //
+  // Create a function that prints quads, quadButtons, etc as json objects to
+  // the console
 
   mlh::Renderer App = mlh::Renderer();
 
@@ -38,6 +42,11 @@ int main() {
       mlh::QuadButton(std::move(Test), WindowWidth, WindowHeight);
 
   App.addButton(Button1);
+
+  mlh::QuadGenerator::printBasicQuadValues();
+
+  mlh::Quad BasicQuad = mlh::QuadGenerator::getBasicQuad();
+  App.addQuad(BasicQuad);
 
   App.runLoop();
 

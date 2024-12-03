@@ -135,10 +135,14 @@ void Window::setShader(const std::string &Vertex, const std::string &Fragment) {
 }
 
 void Window::setBackground(float TextureID) {
-  Vertex A = {0.0f, 0.0f, -0.1f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, TextureID};
-  Vertex B = {1.0f, 0.0f, -0.1f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, TextureID};
-  Vertex C = {1.0f, 1.0f, -0.1f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, TextureID};
-  Vertex D = {0.0f, 1.0f, -0.1f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f, TextureID};
+  Vertex A = {0.0f, 0.0f, 0.99999f, 1.0f, 1.0f,
+              1.0f, 1.0f, 0.0f,     0.0f, TextureID};
+  Vertex B = {1.0f, 0.0f, 0.99999f, 1.0f, 1.0f,
+              1.0f, 1.0f, 1.0f,     0.0f, TextureID};
+  Vertex C = {1.0f, 1.0f, 0.99999f, 1.0f, 1.0f,
+              1.0f, 1.0f, 1.0f,     1.0f, TextureID};
+  Vertex D = {0.0f, 1.0f, 0.99999f, 1.0f, 1.0f,
+              1.0f, 1.0f, 0.0f,     1.0f, TextureID};
   Quad Background = {A, B, C, D};
   Quads.push_back(Background);
 }

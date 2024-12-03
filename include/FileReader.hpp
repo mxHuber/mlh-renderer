@@ -5,7 +5,8 @@
 
 namespace mlh {
 
-struct FileReader {
+class FileReader {
+public:
   static void readFromFile(std::string &ContainerForInput,
                            const std::string &FileDirectory);
 };
