@@ -4,10 +4,12 @@
 #include "Renderer.hpp"
 
 namespace mlh {
+
 class DeserializeJSON {
 public:
-  void deserializeJSON(const std::string &Path, Renderer &App);
+  void static deserializeJSON(const std::string &Path, Renderer &App);
 };
+
 } // namespace mlh
 
 #endif

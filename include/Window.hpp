@@ -37,6 +37,9 @@ public:
     return Renderer.createTexture(Path);
   };
 
+  inline int &getWidthReference() { return Width; }
+  inline int &getHeightReference() { return Height; }
+
 private:
   int Width = 800;
   int Height = 600;

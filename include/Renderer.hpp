@@ -1,6 +1,7 @@
 #ifndef MLH_RENDERER_HPP
 #define MLH_RENDERER_HPP
 
+#include "QuadButton.hpp"
 #include "Window.hpp"
 
 namespace mlh {
@@ -15,7 +16,12 @@ public:
   void start();
 
   void addQuad(const Quad &ToAdd) { MainWindow.addQuad(ToAdd); }
-  void addButton(const QuadButton &ToAdd) { MainWindow.addButton(ToAdd); }
+  void addQuadButton(const QuadButton &ToAdd) { MainWindow.addButton(ToAdd); }
+  void createQuadButton(const Quad &ToAdd) {
+    MainWindow.addButton(
+        std::move(QuadButton(ToAdd, MainWindow.getWidthReference(),
+                             MainWindow.getHeightReference())));
+  }
   void setShader(const std::string &Vertex, const std::string &Fragment);
   inline float createTexture(const std::string &Path) {
     return MainWindow.createTexture(Path);

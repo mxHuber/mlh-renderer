@@ -3,8 +3,8 @@
 
 namespace mlh {
 
-QuadButton::QuadButton(const Quad &ClickableArea, unsigned int &WindowWidth,
-                       unsigned int &WindowHeight)
+QuadButton::QuadButton(const Quad &ClickableArea, int &WindowWidth,
+                       int &WindowHeight)
     : WindowWidth(WindowWidth), WindowHeight(WindowHeight),
       ClickableArea(ClickableArea) {
 

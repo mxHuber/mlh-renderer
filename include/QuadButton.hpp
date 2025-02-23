@@ -7,8 +7,7 @@ namespace mlh {
 
 class QuadButton {
 public:
-  QuadButton(const Quad &ClickableArea, unsigned int &WindowWidth,
-             unsigned int &WindowHeight);
+  QuadButton(const Quad &ClickableArea, int &WindowWidth, int &WindowHeight);
 
   const bool checkBounds(float XPos, float YPos) const;
 
@@ -22,8 +21,8 @@ private:
   float LeftBoundary = 0.0f;
   float RightBoundary = 0.0f;
 
-  unsigned int &WindowWidth;
-  unsigned int &WindowHeight;
+  int &WindowWidth;
+  int &WindowHeight;
 };
 
 } // namespace mlh

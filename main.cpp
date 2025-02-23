@@ -1,3 +1,4 @@
+#include "DeserializeJSON.hpp"
 #include "QuadGenerator.hpp"
 #include "Renderer.hpp"
 
@@ -15,6 +16,9 @@ int main() {
 
   mlh::Renderer App = mlh::Renderer();
 
+  // Test if passing a string like that works, as deserializeJSON() takes a
+  // string address as an argument
+
   App.setShader("../resources/Shaders/Vertex.shader",
                 "../resources/Shaders/Fragment.shader");
   // App.addQuad(mlh::QuadGenerator::getBasicQuad());
@@ -23,10 +27,9 @@ int main() {
   //    App.createTexture("../resources/Textures/test64x64.png");
   // float BackgroundImageID =
   //    App.createTexture("../resources/Textures/BackgroundImage.png");
-  float BackgroundImageID =
-      App.createTexture("../resources/Textures/BackgroundImage.jpg");
-  App.setBackground(BackgroundImageID);
-
+  mlh::DeserializeJSON::deserializeJSON("../resources/Files/test_app_1.json",
+                                        App);
+#if false
   mlh::Vertex TestA = {0.4f, 0.6f, -1.0f, 1.0f, 0.0f,
                        0.0f, 1.0f, 0.0f,  0.0f, 0.0f};
   mlh::Vertex TestB = {0.6f, 0.6f, -1.0f, 0.0f, 1.0f,
@@ -47,6 +50,7 @@ int main() {
 
   mlh::Quad BasicQuad = mlh::QuadGenerator::getBasicQuad();
   App.addQuad(BasicQuad);
+#endif
 
   App.runLoop();
 
