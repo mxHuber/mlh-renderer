@@ -132,27 +132,72 @@ void DeserializeJSON::loadTexCoords(const nlohmann::json &JSON,
   }
 }
 
+void DeserializeJSON::checkIfQuadJSONIsValid(const nlohmann::json &QuadJSON) {
+  assert(QuadJSON.contains("A"));
+  assert(QuadJSON.contains("B"));
+  assert(QuadJSON.contains("C"));
+  assert(QuadJSON.contains("D"));
+
+  assert(QuadJSON["A"].contains("Color"));
+  assert(QuadJSON["A"].contains("Position"));
+  assert(QuadJSON["A"].contains("TexCoords"));
+
+  assert(QuadJSON["B"].contains("Color"));
+  assert(QuadJSON["B"].contains("Position"));
+  assert(QuadJSON["B"].contains("TexCoords"));
+
+  assert(QuadJSON["C"].contains("Color"));
+  assert(QuadJSON["C"].contains("Position"));
+  assert(QuadJSON["C"].contains("TexCoords"));
+
+  assert(QuadJSON["D"].contains("Color"));
+  assert(QuadJSON["D"].contains("Position"));
+  assert(QuadJSON["D"].contains("TexCoords"));
+}
+
+Quad DeserializeJSON::loadQuad(const nlohmann::json &QuadJSON) {
+  Quad NewQuad = Quad();
+
+  checkIfQuadJSONIsValid(QuadJSON);
+
+  loadColor(QuadJSON["A"]["Color"], NewQuad.A.Color);
+  loadPosition(QuadJSON["A"]["Position"], NewQuad.A.Position);
+  loadTexCoords(QuadJSON["A"]["TexCoords"], NewQuad.A.TexCoords);
+
+  loadColor(QuadJSON["B"]["Color"], NewQuad.B.Color);
+  loadPosition(QuadJSON["B"]["Position"], NewQuad.B.Position);
+  loadTexCoords(QuadJSON["B"]["TexCoords"], NewQuad.B.TexCoords);
+
+  loadColor(QuadJSON["C"]["Color"], NewQuad.C.Color);
+  loadPosition(QuadJSON["C"]["Position"], NewQuad.C.Position);
+  loadTexCoords(QuadJSON["C"]["TexCoords"], NewQuad.C.TexCoords);
+
+  loadColor(QuadJSON["D"]["Color"], NewQuad.D.Color);
+  loadPosition(QuadJSON["D"]["Position"], NewQuad.D.Position);
+  loadTexCoords(QuadJSON["D"]["TexCoords"], NewQuad.D.TexCoords);
+
+  return std::move(NewQuad);
+}
+
+void DeserializeJSON::loadQuads(const nlohmann::json &JSON, Renderer &App) {
+  if (!JSON.contains("Quads")) {
+    return;
+  }
+
+  for (const auto &QuadJSON : JSON["Quads"]) {
+    Quad CurrentQuad = loadQuad(QuadJSON);
+    App.addQuad(CurrentQuad);
+  }
+}
+
 void DeserializeJSON::loadQuadButtons(const nlohmann::json &JSON,
                                       Renderer &App) {
-  for (const auto &QuadButton : JSON["QuadButtons"]) {
-    Quad CurrentQuad = Quad();
+  if (!JSON.contains("QuadButtons")) {
+    return;
+  }
 
-    loadColor(QuadButton["A"]["Color"], CurrentQuad.A.Color);
-    loadPosition(QuadButton["A"]["Position"], CurrentQuad.A.Position);
-    loadTexCoords(QuadButton["A"]["TexCoords"], CurrentQuad.A.TexCoords);
-
-    loadColor(QuadButton["B"]["Color"], CurrentQuad.B.Color);
-    loadPosition(QuadButton["B"]["Position"], CurrentQuad.B.Position);
-    loadTexCoords(QuadButton["B"]["TexCoords"], CurrentQuad.B.TexCoords);
-
-    loadColor(QuadButton["C"]["Color"], CurrentQuad.C.Color);
-    loadPosition(QuadButton["C"]["Position"], CurrentQuad.C.Position);
-    loadTexCoords(QuadButton["C"]["TexCoords"], CurrentQuad.C.TexCoords);
-
-    loadColor(QuadButton["D"]["Color"], CurrentQuad.D.Color);
-    loadPosition(QuadButton["D"]["Position"], CurrentQuad.D.Position);
-    loadTexCoords(QuadButton["D"]["TexCoords"], CurrentQuad.D.TexCoords);
-
+  for (const auto &QuadButtonJSON : JSON["QuadButtons"]) {
+    Quad CurrentQuad = loadQuad(QuadButtonJSON);
     App.createQuadButton(CurrentQuad);
   }
 }
@@ -172,6 +217,7 @@ void DeserializeJSON::deserializeJSON(const std::string &Path, Renderer &App) {
   }
 
   loadBackground(JSON, App);
+  loadQuads(JSON, App);
   loadQuadButtons(JSON, App);
 }
 

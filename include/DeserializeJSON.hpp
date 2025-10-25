@@ -14,6 +14,9 @@ private:
   static void loadColor(nlohmann::json JSON, float (&Color)[4]);
   static void loadPosition(const nlohmann::json &JSON, float (&Position)[3]);
   static void loadTexCoords(const nlohmann::json &JSON, float (&TexCoords)[3]);
+  static void checkIfQuadJSONIsValid(const nlohmann::json &QuadJSON);
+  static Quad loadQuad(const nlohmann::json &QuadJSON);
+  static void loadQuads(const nlohmann::json &JSON, Renderer &App);
   static void loadQuadButtons(const nlohmann::json &JSON, Renderer &App);
 };
 
