@@ -1,4 +1,5 @@
 #include "DeserializeJSON.hpp"
+#include "PrintQuads.hpp"
 #include "QuadGenerator.hpp"
 #include "Renderer.hpp"
 
@@ -11,8 +12,10 @@ int main() {
   // Find out if it can be used for layering, aka determine what should render
   // infront, if there are overlapping sprites
   //
-  // Create a function that prints quads, quadButtons, etc as json objects to
-  // the console
+  // TODO: create a software with this app where buttons can be placed with
+  // certain functions. All this data then should be serialized.
+  //
+  // TODO: add subfolders and sort files
 
   mlh::Renderer App = mlh::Renderer();
 
@@ -29,7 +32,6 @@ int main() {
   //    App.createTexture("../resources/Textures/BackgroundImage.png");
   mlh::DeserializeJSON::deserializeJSON("../resources/Files/test_app_1.json",
                                         App);
-#if false
   mlh::Vertex TestA = {0.4f, 0.6f, -1.0f, 1.0f, 0.0f,
                        0.0f, 1.0f, 0.0f,  0.0f, 0.0f};
   mlh::Vertex TestB = {0.6f, 0.6f, -1.0f, 0.0f, 1.0f,
@@ -41,6 +43,9 @@ int main() {
 
   mlh::Quad Test = {TestA, TestB, TestC, TestD};
 
+  mlh::printQuad(Test);
+
+#if false
   mlh::QuadButton Button1 =
       mlh::QuadButton(std::move(Test), WindowWidth, WindowHeight);
 
