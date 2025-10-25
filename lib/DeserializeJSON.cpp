@@ -219,6 +219,8 @@ void DeserializeJSON::deserializeJSON(const std::string &Path, Renderer &App) {
   loadBackground(JSON, App);
   loadQuads(JSON, App);
   loadQuadButtons(JSON, App);
+
+  std::cout << "JSON loaded successfully!" << std::endl;
 }
 
 } // namespace mlh

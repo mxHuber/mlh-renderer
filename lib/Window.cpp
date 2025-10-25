@@ -100,14 +100,14 @@ void Window::advance() {
   processInput(GlfwWindow);
   glfwGetWindowSize(GlfwWindow, &Width, &Height);
 
-  for (const auto &Curr : QuadButtons) {
+  for (auto &Curr : QuadButtons) {
     Renderer.addToBatch(Curr.getQuad());
     // glfw's mouse coords have the origin (0, 0) on the top left
     // (Height - YMousePos) / Height
     // so the origin is on the bottom left
     if (MouseButtons::LeftMousePressed) {
       if (Curr.checkBounds(XMousePos / Width, (Height - YMousePos) / Height)) {
-        std::cout << "Button was clicked!" << std::endl;
+        Curr.onPress();
       }
     }
   }

@@ -3,10 +3,12 @@
 
 namespace mlh {
 
+int QuadButton::ButtonIDCounter = 0;
+
 QuadButton::QuadButton(const Quad &ClickableArea, int &WindowWidth,
                        int &WindowHeight)
     : WindowWidth(WindowWidth), WindowHeight(WindowHeight),
-      ClickableArea(ClickableArea) {
+      ClickableArea(ClickableArea), ButtonID(ButtonIDCounter++) {
 
   // TODO: sort positions, so that A, B, C and D always correspond to bottom
   // left, bottom right, top right and top left.
