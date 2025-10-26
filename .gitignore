@@ -1,3 +1,4 @@
 build/*
 .cache/*
 external/*
+!external/manually_added
