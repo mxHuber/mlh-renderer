@@ -14,13 +14,13 @@ int main() {
   //
   // TODO: create a software with this app where buttons can be placed with
   // certain functions. All this data then should be serialized.
+  // This should on one hand serve as a tool to make applications, but on the
+  // other hand also be a good test for using this as an external software and
+  // to check if it can be implemented well into existing projects.
   //
   // TODO: add subfolders and sort files
 
   mlh::Renderer App = mlh::Renderer();
-
-  // Test if passing a string like that works, as deserializeJSON() takes a
-  // string address as an argument
 
   App.setShader("../resources/Shaders/Vertex.shader",
                 "../resources/Shaders/Fragment.shader");
