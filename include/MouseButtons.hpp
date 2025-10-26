@@ -4,8 +4,8 @@
 namespace mlh {
 
 struct MouseButtons {
-  static bool LeftMousePressed;
-  static bool RightMousePressed;
+  inline static bool LeftMousePressed = false;
+  inline static bool RightMousePressed = false;
 };
 
 } // namespace mlh

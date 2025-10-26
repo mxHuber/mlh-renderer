@@ -110,11 +110,15 @@ public:
   }
 
 private:
-  static Vertex A;
-  static Vertex B;
-  static Vertex C;
-  static Vertex D;
-  static Quad BasicQuad;
+  inline static Vertex A = {-0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+                            1.0f,  1.0f,  0.0f, 0.0f, 0.0f};
+  inline static Vertex B = {0.5f, -0.5f, 0.0f, 1.0f, 1.0f,
+                            1.0f, 1.0f,  1.0f, 0.0f, 0.0f};
+  inline static Vertex C = {0.5f, 0.5f, 0.0f, 0.0f, 0.5f,
+                            0.5f, 1.0f, 1.0f, 1.0f, 0.0f};
+  inline static Vertex D = {-0.5f, 0.5f, 0.0f, 0.0f, 0.8f,
+                            0.2f,  1.0f, 0.0f, 1.0f, 0.0f};
+  inline static Quad BasicQuad = {A, B, C, D};
 };
 
 } // namespace mlh

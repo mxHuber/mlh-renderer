@@ -4,7 +4,7 @@
 namespace mlh {
 
 struct Keys {
-  static bool keys[1024];
+  inline static bool keys[1024] = {false};
 };
 
 } // namespace mlh
