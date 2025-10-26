@@ -8,15 +8,20 @@ unsigned int WindowWidth = 800;
 unsigned int WindowHeight = 600;
 
 int main() {
-  // TODO: third value in position is currently not used.
-  // Find out if it can be used for layering, aka determine what should render
-  // infront, if there are overlapping sprites
-  //
+  // Top priority:
+  // TODO: write guide how to include and use this project.
+  // TODO: create a single header file that can and should be included to use
+  // this project.
   // TODO: create a software with this app where buttons can be placed with
   // certain functions. All this data then should be serialized.
   // This should on one hand serve as a tool to make applications, but on the
   // other hand also be a good test for using this as an external software and
   // to check if it can be implemented well into existing projects.
+  //
+  // Low priority:
+  // TODO: third value in position is currently not used.
+  // Find out if it can be used for layering, aka determine what should render
+  // infront, if there are overlapping sprites
   //
   // TODO: add subfolders and sort files
 
