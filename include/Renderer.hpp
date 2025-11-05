@@ -2,13 +2,14 @@
 #define MLH_RENDERER_HPP
 
 #include "QuadButton.hpp"
+#include "SettingsData.hpp"
 #include "Window.hpp"
 
 namespace mlh {
 
 class Renderer {
 public:
-  Renderer() { MainWindow = Window(800, 600, "Renderer"); }
+  Renderer() { MainWindow = Window("Renderer"); }
   ~Renderer() { glfwTerminate(); }
 
   void runLoop() {
@@ -34,9 +35,7 @@ public:
   void addQuad(const Quad &ToAdd) { MainWindow.addQuad(ToAdd); }
   void addQuadButton(const QuadButton &ToAdd) { MainWindow.addButton(ToAdd); }
   void createQuadButton(const Quad &ToAdd) {
-    MainWindow.addButton(
-        std::move(QuadButton(ToAdd, MainWindow.getWidthReference(),
-                             MainWindow.getHeightReference())));
+    MainWindow.addButton(std::move(QuadButton(ToAdd)));
   }
 
   void setShader(const std::string &Vertex, const std::string &Fragment) {
@@ -54,6 +53,7 @@ public:
 private:
   Window MainWindow = Window();
   bool Close = false;
+  SettingsData Settings = SettingsData();
 };
 
 } // namespace mlh

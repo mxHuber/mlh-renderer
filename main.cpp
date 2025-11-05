@@ -3,17 +3,23 @@
 #include "QuadGenerator.hpp"
 #include "Renderer.hpp"
 
-// settings
-unsigned int WindowWidth = 800;
-unsigned int WindowHeight = 600;
-
 int main() {
   // Top priority:
+  // TODO: more features, which can and should be used for the app-builder.
+  //       -> Slider for float values
+  //       -> Input fields for numbers?
+  //       -> Input fields for strings?
+  //       -> Folder for images, that will be loaded when the app is started,
+  //       that can be selected for buttons, the background, etc.
+  //       -> Checkboxes
+  //       Example: There should be a background editor. Either use sliders for
+  //       the colors, or select an image to be used.
   // TODO: write guide how to include and use this project.
   // TODO: create a single header file that can and should be included to use
   // this project.
   // How to do the single include header? Make a script that stitches together
   // all header files into a single one?
+  // -> how does that work with glad.c or stb_image.cpp?
   // Maybe look at nlohmann::json how it's done there.
   // TODO: create a software with this app where buttons can be placed with
   // certain functions. All this data then should be serialized.
@@ -25,7 +31,6 @@ int main() {
   // TODO: third value in position is currently not used.
   // Find out if it can be used for layering, aka determine what should render
   // infront, if there are overlapping sprites
-  //
   // TODO: add subfolders and sort files
 
   mlh::Renderer App = mlh::Renderer();

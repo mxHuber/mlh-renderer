@@ -7,6 +7,7 @@
 #include "Quad.hpp"
 #include "QuadButton.hpp"
 #include "RectangleRenderer.hpp"
+#include "SettingsData.hpp"
 #include "Shader.hpp"
 #include <iostream>
 #include <string>
@@ -76,14 +77,14 @@ inline void processInput(GLFWwindow *window) {
 class Window {
 public:
   Window() = default;
-  Window(int Width, int Height, const char *Name)
-      : Width(Width), Height(Height), Name(Name) {
+  Window(const char *Name) : Name(Name) {
 
     std::cout << "Initializing Glfw..." << std::endl;
     InitOpenGL::initializeGlfw();
 
     std::cout << "Creating window..." << std::endl;
-    GlfwWindow = glfwCreateWindow(Width, Height, Name, NULL, NULL);
+    GlfwWindow = glfwCreateWindow(Settings.WindowWidth, Settings.WindowHeight,
+                                  Name, NULL, NULL);
 
     if (GlfwWindow == NULL) {
       std::cout << "Failed to create GLFW window" << std::endl;
@@ -104,12 +105,13 @@ public:
     InitOpenGL::initializeSettings();
 
     // Initialize RectangleRenderer last, because it needs glad stuff
-    Renderer = RectangleRenderer(Width, Height);
+    Renderer = RectangleRenderer(Settings.WindowWidth, Settings.WindowHeight);
   }
 
   void advance() {
     processInput(GlfwWindow);
-    glfwGetWindowSize(GlfwWindow, &Width, &Height);
+    glfwGetWindowSize(GlfwWindow, &Settings.WindowWidth,
+                      &Settings.WindowHeight);
 
     for (auto &Curr : QuadButtons) {
       Renderer.addToBatch(Curr.getQuad());
@@ -117,8 +119,9 @@ public:
       // (Height - YMousePos) / Height
       // so the origin is on the bottom left
       if (MouseButtons::LeftMousePressed) {
-        if (Curr.checkBounds(XMousePos / Width,
-                             (Height - YMousePos) / Height)) {
+        if (Curr.checkBounds(XMousePos / Settings.WindowWidth,
+                             (Settings.WindowHeight - YMousePos) /
+                                 Settings.WindowHeight)) {
           Curr.onPress();
         }
       }
@@ -170,12 +173,8 @@ public:
     return Renderer.createTexture(Path);
   };
 
-  inline int &getWidthReference() { return Width; }
-  inline int &getHeightReference() { return Height; }
-
 private:
-  int Width = 800;
-  int Height = 600;
+  SettingsData Settings;
   std::string Name;
   GLFWwindow *GlfwWindow = nullptr;
 
