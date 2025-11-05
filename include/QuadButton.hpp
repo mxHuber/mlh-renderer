@@ -16,7 +16,7 @@ public:
         ClickableArea(getBoundaryOfQuad(QuadOfButton, Settings)),
         ButtonID(ButtonIDCounter++) {}
 
-  inline const bool checkBounds(float XPos, float YPos) const {
+  inline const bool isPosInBoundary(float XPos, float YPos) const {
     return isPointInBoundary(XPos, YPos, ClickableArea);
   }
 
@@ -26,10 +26,14 @@ public:
     return ClickableArea;
   }
 
-  inline void onPress() { Func(); }
+  inline const void setClickableArea(RectangleBoundary newClickableArea) {
+    ClickableArea = newClickableArea;
+  }
+
+  inline virtual void onPress() { Func(); }
   inline void setFunc(std::function<void()> NewFunc) { Func = NewFunc; }
 
-private:
+protected:
   Quad QuadOfButton;
   RectangleBoundary ClickableArea;
   SettingsData Settings = SettingsData();

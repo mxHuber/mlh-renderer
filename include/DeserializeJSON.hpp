@@ -1,6 +1,7 @@
 #ifndef MLH_RENDERER_DESERIALIZE_JSON_HPP
 #define MLH_RENDERER_DESERIALIZE_JSON_HPP
 
+#include "QuadButton.hpp"
 #include "Renderer.hpp"
 #include <fstream>
 #include <nlohmann/json.hpp>
@@ -222,7 +223,8 @@ private:
 
     for (const auto &QuadButtonJSON : JSON["QuadButtons"]) {
       Quad CurrentQuad = loadQuad(QuadButtonJSON);
-      App.createQuadButton(CurrentQuad);
+      QuadButton CurrentQuadButton = QuadButton(CurrentQuad);
+      App.addQuadButton(CurrentQuadButton);
     }
   }
 };

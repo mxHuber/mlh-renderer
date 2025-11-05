@@ -1,6 +1,7 @@
-#ifndef MLH_RENDERER_HPP
-#define MLH_RENDERER_HPP
+#ifndef MLH_RENDERER_RENDERER_HPP
+#define MLH_RENDERER_RENDERER_HPP
 
+#include "CheckboxButton.hpp"
 #include "QuadButton.hpp"
 #include "SettingsData.hpp"
 #include "Window.hpp"
@@ -33,9 +34,11 @@ public:
   }
 
   void addQuad(const Quad &ToAdd) { MainWindow.addQuad(ToAdd); }
-  void addQuadButton(const QuadButton &ToAdd) { MainWindow.addButton(ToAdd); }
-  void createQuadButton(const Quad &ToAdd) {
-    MainWindow.addButton(std::move(QuadButton(ToAdd)));
+  void addQuadButton(const QuadButton &ToAdd) {
+    MainWindow.addQuadButton(ToAdd);
+  }
+  void addCheckboxButton(const CheckboxButton &ToAdd) {
+    MainWindow.addCheckboxButton(ToAdd);
   }
 
   void setShader(const std::string &Vertex, const std::string &Fragment) {

@@ -1,6 +1,7 @@
 #ifndef MLH_RENDERER_WINDOW_HPP
 #define MLH_RENDERER_WINDOW_HPP
 
+#include "CheckboxButton.hpp"
 #include "InitOpenGL.hpp"
 #include "Keys.hpp"
 #include "MouseButtons.hpp"
@@ -113,17 +114,38 @@ public:
     glfwGetWindowSize(GlfwWindow, &Settings.WindowWidth,
                       &Settings.WindowHeight);
 
+    // TODO: make all these checks in a more sensible manner. For example, move
+    // each check to a function or something.
     for (auto &Curr : QuadButtons) {
       Renderer.addToBatch(Curr.getQuad());
       // glfw's mouse coords have the origin (0, 0) on the top left
       // (Height - YMousePos) / Height
       // so the origin is on the bottom left
       if (MouseButtons::LeftMousePressed) {
-        if (Curr.checkBounds(XMousePos / Settings.WindowWidth,
-                             (Settings.WindowHeight - YMousePos) /
-                                 Settings.WindowHeight)) {
+        if (Curr.isPosInBoundary(XMousePos / Settings.WindowWidth,
+                                 (Settings.WindowHeight - YMousePos) /
+                                     Settings.WindowHeight)) {
           Curr.onPress();
         }
+      }
+    }
+
+    for (auto &Curr : CheckboxButtons) {
+      Renderer.addToBatch(Curr.getQuad());
+      // glfw's mouse coords have the origin (0, 0) on the top left
+      // (Height - YMousePos) / Height
+      // so the origin is on the bottom left
+      if (LeftMousePressedLastFrame && !MouseButtons::LeftMousePressed) {
+        if (Curr.isPosInBoundary(XMousePos / Settings.WindowWidth,
+                                 (Settings.WindowHeight - YMousePos) /
+                                     Settings.WindowHeight)) {
+          Curr.onPress();
+        }
+      }
+
+      LeftMousePressedLastFrame = false;
+      if (MouseButtons::LeftMousePressed) {
+        LeftMousePressedLastFrame = true;
       }
     }
 
@@ -163,8 +185,11 @@ public:
   }
 
   inline void addQuad(const Quad &ToAdd) { Quads.push_back(ToAdd); }
-  inline void addButton(const QuadButton &ToAdd) {
+  inline void addQuadButton(const QuadButton &ToAdd) {
     QuadButtons.push_back(ToAdd);
+  }
+  inline void addCheckboxButton(const CheckboxButton &ToAdd) {
+    CheckboxButtons.push_back(ToAdd);
   }
   inline void clearQuads() { Quads.clear(); }
   inline void clearButtons() { QuadButtons.clear(); }
@@ -177,10 +202,12 @@ private:
   SettingsData Settings;
   std::string Name;
   GLFWwindow *GlfwWindow = nullptr;
+  bool LeftMousePressedLastFrame = false;
 
   RectangleRenderer Renderer = RectangleRenderer();
   std::vector<Quad> Quads = {};
   std::vector<QuadButton> QuadButtons = {};
+  std::vector<CheckboxButton> CheckboxButtons = {};
 };
 
 } // namespace mlh
