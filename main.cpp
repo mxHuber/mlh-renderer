@@ -53,30 +53,6 @@ int main() {
   mlh::DeserializeJSON::deserializeJSON("../resources/Files/test_app_1.json",
                                         App);
 
-#if false
-  mlh::Vertex TestA = {0.4f, 0.6f, -1.0f, 1.0f, 0.0f,
-                       0.0f, 1.0f, 0.0f,  0.0f, 0.0f};
-  mlh::Vertex TestB = {0.6f, 0.6f, -1.0f, 0.0f, 1.0f,
-                       0.0f, 1.0f, 1.0f,  0.0f, 0.0f};
-  mlh::Vertex TestC = {0.6f, 0.8f, -1.0f, 0.0f, 0.0f,
-                       1.0f, 0.0f, 1.0f,  1.0f, 0.0f};
-  mlh::Vertex TestD = {0.4f, 0.8f, -1.0f, 0.0f, 0.0f,
-                       0.0f, 1.0f, 0.0f,  1.0f, 0.0f};
-
-  mlh::Quad Test = {TestA, TestB, TestC, TestD};
-
-  mlh::printQuad(Test);
-
-  mlh::QuadButton Button1 = mlh::QuadButton(std::move(Test));
-
-  App.addQuadButton(Button1);
-
-  mlh::QuadGenerator::printBasicQuadValues();
-
-  mlh::Quad BasicQuad = mlh::QuadGenerator::getBasicQuad();
-  App.addQuad(BasicQuad);
-#endif
-
   mlh::Quad QuadForCheckbox = mlh::QuadGenerator::getBasicQuad();
 
   // first button
@@ -94,8 +70,6 @@ int main() {
   QuadForCheckbox.C = TestC;
   QuadForCheckbox.D = TestD;
 
-  float TestForLoading =
-      App.createTexture("../resources/Textures/CheckedCheckbox.png");
   float UncheckedCheckboxTexID =
       App.createTexture("../resources/Textures/UncheckedCheckbox.png");
   float CheckedCheckboxTexID =
@@ -106,33 +80,10 @@ int main() {
   mlh::changeQuadTexture(QuadForCheckbox, CheckedCheckboxTexID);
   mlh::Quad CheckedQuad = QuadForCheckbox;
 
-  // second button
-  mlh::Quad QuadForCheckbox2 = mlh::QuadGenerator::getBasicQuad();
-
-  mlh::Vertex TestA2 = {0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
-                        1.0f, 1.0f, 0.0f, 0.0f, 0.0f};
-  mlh::Vertex TestB2 = {1.0f, 0.5f, 0.0f, 1.0f, 1.0f,
-                        1.0f, 1.0f, 1.0f, 0.0f, 0.0f};
-  mlh::Vertex TestC2 = {1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-                        1.0f, 1.0f, 1.0f, 1.0f, 0.0f};
-  mlh::Vertex TestD2 = {0.5f, 1.0f, 0.0f, 1.0f, 1.0f,
-                        1.0f, 1.0f, 0.0f, 1.0f, 0.0f};
-
-  QuadForCheckbox2.A = TestA2;
-  QuadForCheckbox2.B = TestB2;
-  QuadForCheckbox2.C = TestC2;
-  QuadForCheckbox2.D = TestD2;
-
-  mlh::Quad UncheckedQuad2 = QuadForCheckbox2;
-  mlh::Quad CheckedQuad2 = QuadForCheckbox2;
-
   mlh::CheckboxButton TestCheckBox =
       mlh::CheckboxButton(UncheckedQuad, CheckedQuad);
-  mlh::CheckboxButton TestCheckBox2 =
-      mlh::CheckboxButton(UncheckedQuad2, CheckedQuad2);
 
   App.addCheckboxButton(TestCheckBox);
-  // App.addCheckboxButton(TestCheckBox2);
 
   App.runLoop();
 

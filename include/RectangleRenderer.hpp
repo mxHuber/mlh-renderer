@@ -31,13 +31,15 @@ public:
   }
 
   float createTexture(const std::string &Path) {
-    float TextureIndex = 0;
+    float TextureIndex = 1;
 
     if (Path.substr(Path.length() - 4, Path.length() - 1) == ".png") {
       TextureIndex = createTexturePNG(Path);
+      std::cout << "Loaded PNG: " << Path << std::endl;
     } else if ((Path.substr(Path.length() - 4, Path.length() - 1) == ".jpg") ||
                (Path.substr(Path.length() - 5, Path.length() - 1) == ".jpeg")) {
       TextureIndex = createTextureJPG(Path);
+      std::cout << "Loaded JPG: " << Path << std::endl;
     } else {
       std::cout
           << "[RectangleRenderer::createTexture]: file extension not supported."
@@ -239,8 +241,18 @@ private:
     // load image, create texture and generate mipmaps
     unsigned char *Data =
         stbi_load(Path.c_str(), &Width, &Height, &NrChannels, 0);
-    if (Data) {
+
+    if (!Data) {
+      std::cout << "Failed to load texture" << std::endl;
+    }
+
+    if (NrChannels == 3) {
       glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB,
+                   GL_UNSIGNED_BYTE, Data);
+      glGenerateMipmap(GL_TEXTURE_2D);
+      checkForOpenGLErrors("[createTextureJPG]: After glGenerateMipmap");
+    } else if (NrChannels == 4) {
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Width, Height, 0, GL_RGBA,
                    GL_UNSIGNED_BYTE, Data);
       glGenerateMipmap(GL_TEXTURE_2D);
       checkForOpenGLErrors("[createTextureJPG]: After glGenerateMipmap");
@@ -272,8 +284,18 @@ private:
     // load image, create texture and generate mipmaps
     unsigned char *Data =
         stbi_load(Path.c_str(), &Width, &Height, &NrChannels, 0);
-    if (Data) {
-      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, Width, Height, 0, GL_RGBA,
+
+    if (!Data) {
+      std::cout << "Failed to load texture" << std::endl;
+    }
+
+    if (NrChannels == 3) {
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB,
+                   GL_UNSIGNED_BYTE, Data);
+      glGenerateMipmap(GL_TEXTURE_2D);
+      checkForOpenGLErrors("[createTexturePNG]: After glGenerateMipmap");
+    } else if (NrChannels == 4) {
+      glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Width, Height, 0, GL_RGBA,
                    GL_UNSIGNED_BYTE, Data);
       glGenerateMipmap(GL_TEXTURE_2D);
       checkForOpenGLErrors("[createTexturePNG]: After glGenerateMipmap");
