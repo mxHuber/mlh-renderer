@@ -191,13 +191,19 @@ public:
   }
 
   inline void addQuad(const Quad &ToAdd) { Quads.push_back(ToAdd); }
+
   inline void addQuadButton(const QuadButton &ToAdd) {
     QuadButtons.push_back(ToAdd);
   }
+
   inline void addCheckboxButton(const CheckboxButton &ToAdd) {
     CheckboxButtons.push_back(ToAdd);
   }
+
+  inline void addMenu(Menu &ToAdd) { Menus.push_back(ToAdd); }
+
   inline void clearQuads() { Quads.clear(); }
+
   inline void clearButtons() { QuadButtons.clear(); }
 
   inline float createTexture(const std::string &Path) {

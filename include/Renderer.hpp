@@ -34,12 +34,16 @@ public:
   }
 
   void addQuad(const Quad &ToAdd) { MainWindow.addQuad(ToAdd); }
+
   void addQuadButton(const QuadButton &ToAdd) {
     MainWindow.addQuadButton(ToAdd);
   }
+
   void addCheckboxButton(const CheckboxButton &ToAdd) {
     MainWindow.addCheckboxButton(ToAdd);
   }
+
+  void addMenu(Menu &ToAdd) { MainWindow.addMenu(ToAdd); }
 
   void setShader(const std::string &Vertex, const std::string &Fragment) {
     MainWindow.setShader(Vertex, Fragment);

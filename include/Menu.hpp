@@ -6,10 +6,10 @@
 
 namespace mlh {
 
-// TODO:
 class Menu {
 public:
-  Menu(float Width, float Height) : Width(Width), Height(Height) {};
+  Menu(float Width, float Height, const Quad &MenuBackground)
+      : Width(Width), Height(Height), MenuBackground(MenuBackground) {};
 
   std::vector<Quad> getQuads() const {
     std::vector<Quad> QuadsToReturn = {MenuBackground};
@@ -38,6 +38,7 @@ public:
 protected:
   float Width = 0.0f;
   float Height = 0.0f;
+
   Quad MenuBackground;
   std::vector<QuadButton> QuadButtons;
   std::vector<CheckboxButton> CheckboxButtons;

@@ -1,5 +1,6 @@
 #include "CheckboxButton.hpp"
 #include "DeserializeJSON.hpp"
+#include "Menu.hpp"
 #include "PrintQuads.hpp"
 #include "QuadGenerator.hpp"
 #include "QuadUtils.hpp"
@@ -7,12 +8,14 @@
 
 int main() {
   // Top priority:
+  // TODO: Fix transparency. Example: A png with a transparent section will be
+  // drawn with that section as 100% opaque. So it will not blend with what's
+  // behind it.
+
+  // Medium priority:
   // TODO: fix checkbox.
   // A checkbox overlapping another button SOMETIMES break the checkbox
   // button???
-  // TODO: Add "windows" or menus. So not a window like the one that opens when
-  // the program is run, but a rectangle inside the window that has information,
-  // buttons, etc.
   // TODO: check why x and y pos of quads are so weird. Draw a picture with
   // annotations on where what number is and how the screen is filled.
   // TODO: more features, which can and should be used for the app-builder.
@@ -31,8 +34,12 @@ int main() {
   // This should on one hand serve as a tool to make applications, but on the
   // other hand also be a good test for using this as an external software and
   // to check if it can be implemented well into existing projects.
-  //
+
   // Low priority:
+  // TODO: Where to store the data? Currently most stuff is created in the main
+  // function and an address is given to the app. Maybe move the data to the
+  // app? That way, if the app is out of scope, all data of it gets removed as
+  // well.
   // TODO: third value in position is currently not used.
   // Find out if it can be used for layering, aka determine what should render
   // infront, if there are overlapping sprites
@@ -45,15 +52,15 @@ int main() {
   mlh::DeserializeJSON::deserializeJSON("../resources/Files/test_app_1.json",
                                         App);
 
+  // Checkbox
   mlh::Quad QuadForCheckbox = mlh::QuadGenerator::getBasicQuad();
 
-  // first button
-  mlh::Vertex TestA = {0.0f, 0.5f, 0.0f, 1.0f, 1.0f,
-                       1.0f, 1.0f, 0.0f, 0.0f, 0.0f};
-  mlh::Vertex TestB = {0.5f, 0.5f, -1.0f, 1.0f, 1.0f,
-                       1.0f, 1.0f, 1.0f,  0.0f, 0.0f};
-  mlh::Vertex TestC = {0.5f, 1.0f, -1.0f, 1.0f, 1.0f,
-                       1.0f, 1.0f, 1.0f,  1.0f, 0.0f};
+  mlh::Vertex TestA = {0.0f, 0.75f, 0.0f, 1.0f, 1.0f,
+                       1.0f, 1.0f,  0.0f, 0.0f, 0.0f};
+  mlh::Vertex TestB = {0.25f, 0.75f, -1.0f, 1.0f, 1.0f,
+                       1.0f,  1.0f,  1.0f,  0.0f, 0.0f};
+  mlh::Vertex TestC = {0.25f, 1.0f, -1.0f, 1.0f, 1.0f,
+                       1.0f,  1.0f, 1.0f,  1.0f, 0.0f};
   mlh::Vertex TestD = {0.0f, 1.0f, -1.0f, 1.0f, 1.0f,
                        1.0f, 1.0f, 0.0f,  1.0f, 0.0f};
 
@@ -76,6 +83,32 @@ int main() {
       mlh::CheckboxButton(UncheckedQuad, CheckedQuad);
 
   App.addCheckboxButton(TestCheckBox);
+
+  // Menu
+
+  mlh::Quad QuadForMenu = mlh::QuadGenerator::getBasicQuad();
+
+  mlh::Vertex TestMenuA = {0.5f, 0.0f, 0.0f, 1.0f, 1.0f,
+                           1.0f, 1.0f, 0.0f, 0.0f, 0.0f};
+  mlh::Vertex TestMenuB = {1.0f, 0.0f, 0.0f, 1.0f, 1.0f,
+                           1.0f, 1.0f, 0.0f, 1.0f, 0.0f};
+  mlh::Vertex TestMenuC = {1.0f, 0.5f, 0.0f, 1.0f, 1.0f,
+                           1.0f, 1.0f, 1.0f, 1.0f, 0.0f};
+  mlh::Vertex TestMenuD = {0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+                           1.0f, 1.0f, 1.0f, 0.0f, 0.0f};
+  QuadForMenu.A = TestMenuA;
+  QuadForMenu.B = TestMenuB;
+  QuadForMenu.C = TestMenuC;
+  QuadForMenu.D = TestMenuD;
+
+  float MenuBackgroundTexID =
+      App.createTexture("../resources/Textures/TestMenuBackground.png");
+
+  mlh::changeQuadTexture(QuadForMenu, MenuBackgroundTexID);
+
+  mlh::Menu TestMenu = mlh::Menu(200.0f, 500.0f, QuadForMenu);
+
+  App.addMenu(TestMenu);
 
   App.runLoop();
 
