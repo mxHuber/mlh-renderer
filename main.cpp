@@ -10,12 +10,9 @@ int main() {
   // TODO: fix checkbox.
   // A checkbox overlapping another button SOMETIMES break the checkbox
   // button???
-  //  Why does one of the checkbox images not work, but the other one
-  // does?
-  // Loading CheckedCheckbox.png before UncheckedCheckbox changed the
-  // UncheckedCheckbox image slightly (pixels with random color in a line start
-  // appearing). This could mean that texture loading is broken! (But why does
-  // CheckedCheckboxThick.png always work?...)
+  // TODO: Add "windows" or menus. So not a window like the one that opens when
+  // the program is run, but a rectangle inside the window that has information,
+  // buttons, etc.
   // TODO: check why x and y pos of quads are so weird. Draw a picture with
   // annotations on where what number is and how the screen is filled.
   // TODO: more features, which can and should be used for the app-builder.
@@ -28,12 +25,7 @@ int main() {
   //       Example: There should be a background editor. Either use sliders for
   //       the colors, or select an image to be used.
   // TODO: write guide how to include and use this project.
-  // TODO: create a single header file that can and should be included to use
-  // this project.
-  // How to do the single include header? Make a script that stitches together
-  // all header files into a single one?
-  // -> how does that work with glad.c or stb_image.cpp?
-  // Maybe look at nlohmann::json how it's done there.
+  //       -> Don't put everything in header files.
   // TODO: create a software with this app where buttons can be placed with
   // certain functions. All this data then should be serialized.
   // This should on one hand serve as a tool to make applications, but on the

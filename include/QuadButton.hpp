@@ -30,6 +30,12 @@ public:
     ClickableArea = newClickableArea;
   }
 
+  inline virtual void checkPress(float XPos, float YPos) {
+    if (isPosInBoundary(XPos, YPos)) {
+      onPress();
+    }
+  }
+
   inline virtual void onPress() { Func(); }
   inline void setFunc(std::function<void()> NewFunc) { Func = NewFunc; }
 

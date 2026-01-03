@@ -16,6 +16,12 @@ public:
         UncheckedBoundary(getBoundaryOfQuad(UncheckedQuad, Settings)),
         CheckedBoundary(getBoundaryOfQuad(CheckedQuad, Settings)) {};
 
+  inline void checkPress(float XPos, float YPos) override {
+    if (isPosInBoundary(XPos, YPos)) {
+      onPress();
+    }
+  }
+
   inline void onPress() override {
     // If there is a function set, run it
     Func();

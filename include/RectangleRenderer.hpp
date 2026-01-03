@@ -8,6 +8,7 @@
 // then glfw afterwards
 #include <GLFW/glfw3.h>
 #include <stb_image/stb_image.h>
+#include <vector>
 
 #include "Quad.hpp"
 #include "Shader.hpp"
@@ -61,6 +62,22 @@ public:
 
     // For every 4 vertices we have 6 indices
     IndicesCounter += 6;
+  }
+
+  void addToBatch(const std::vector<Quad> &ToAdd) {
+    for (const auto &Curr : ToAdd) {
+      if (VerticesIndex >= MaxQuads - 4) {
+        drawBatch();
+      }
+
+      Vertices[VerticesIndex++] = Curr.A;
+      Vertices[VerticesIndex++] = Curr.B;
+      Vertices[VerticesIndex++] = Curr.C;
+      Vertices[VerticesIndex++] = Curr.D;
+
+      // For every 4 vertices we have 6 indices
+      IndicesCounter += 6;
+    }
   }
 
   void drawBatch() {

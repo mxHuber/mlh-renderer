@@ -4,6 +4,7 @@
 #include "CheckboxButton.hpp"
 #include "InitOpenGL.hpp"
 #include "Keys.hpp"
+#include "Menu.hpp"
 #include "MouseButtons.hpp"
 #include "Quad.hpp"
 #include "QuadButton.hpp"
@@ -114,6 +115,11 @@ public:
     glfwGetWindowSize(GlfwWindow, &Settings.WindowWidth,
                       &Settings.WindowHeight);
 
+    float XPos = XMousePos / Settings.WindowWidth;
+    // TODO: Why does YPos look like that again? Find out and write an
+    // explanation in a comment above the YPos variable.
+    float YPos = (Settings.WindowHeight - YMousePos) / Settings.WindowHeight;
+
     // TODO: make all these checks in a more sensible manner. For example, move
     // each check to a function or something.
     for (auto &Curr : QuadButtons) {
@@ -122,11 +128,7 @@ public:
       // (Height - YMousePos) / Height
       // so the origin is on the bottom left
       if (MouseButtons::LeftMousePressed) {
-        if (Curr.isPosInBoundary(XMousePos / Settings.WindowWidth,
-                                 (Settings.WindowHeight - YMousePos) /
-                                     Settings.WindowHeight)) {
-          Curr.onPress();
-        }
+        Curr.checkPress(XPos, YPos);
       }
     }
 
@@ -136,16 +138,20 @@ public:
       // (Height - YMousePos) / Height
       // so the origin is on the bottom left
       if (LeftMousePressedLastFrame && !MouseButtons::LeftMousePressed) {
-        if (Curr.isPosInBoundary(XMousePos / Settings.WindowWidth,
-                                 (Settings.WindowHeight - YMousePos) /
-                                     Settings.WindowHeight)) {
-          Curr.onPress();
-        }
+        Curr.checkPress(XPos, YPos);
       }
 
       LeftMousePressedLastFrame = false;
       if (MouseButtons::LeftMousePressed) {
         LeftMousePressedLastFrame = true;
+      }
+    }
+
+    for (auto &Curr : Menus) {
+      Renderer.addToBatch(Curr.getQuads());
+
+      if (MouseButtons::LeftMousePressed) {
+        Curr.checkPresses(XPos, YPos);
       }
     }
 
@@ -208,6 +214,7 @@ private:
   std::vector<Quad> Quads = {};
   std::vector<QuadButton> QuadButtons = {};
   std::vector<CheckboxButton> CheckboxButtons = {};
+  std::vector<Menu> Menus = {};
 };
 
 } // namespace mlh
