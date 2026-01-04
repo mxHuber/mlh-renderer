@@ -149,5 +149,159 @@
         ]
       }
     }
+  },
+  "CheckboxButtons": {
+    "CheckboxButton1": {
+      "UncheckedQuad": {
+        "A": {
+          "Position": [
+            0.0,
+            0.75,
+            0
+          ],
+          "Color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "TexCoords": [
+            0,
+            0,
+            0
+          ]
+        },
+        "B": {
+          "Position": [
+            0.25,
+            0.75,
+            0
+          ],
+          "Color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "TexCoords": [
+            1,
+            0,
+            0
+          ]
+        },
+        "C": {
+          "Position": [
+            0.25,
+            1,
+            0
+          ],
+          "Color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "TexCoords": [
+            1,
+            1,
+            0
+          ]
+        },
+        "D": {
+          "Position": [
+            0,
+            1.0,
+            0
+          ],
+          "Color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "TexCoords": [
+            0,
+            1,
+            0
+          ]
+        }
+      },
+      "CheckedQuad": {
+        "A": {
+          "Position": [
+            0.0,
+            0.75,
+            0
+          ],
+          "Color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "TexCoords": [
+            0,
+            0,
+            0
+          ]
+        },
+        "B": {
+          "Position": [
+            0.25,
+            0.75,
+            0
+          ],
+          "Color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "TexCoords": [
+            1,
+            0,
+            0
+          ]
+        },
+        "C": {
+          "Position": [
+            0.25,
+            1,
+            0
+          ],
+          "Color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "TexCoords": [
+            1,
+            1,
+            0
+          ]
+        },
+        "D": {
+          "Position": [
+            0,
+            1.0,
+            0
+          ],
+          "Color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "TexCoords": [
+            0,
+            1,
+            0
+          ]
+        }
+      },
+      "UncheckedButtonTexture": "../resources/Textures/UncheckedCheckbox.png",
+      "CheckedButtonTexture": "../resources/Textures/CheckedCheckbox.png"
+    }
   }
 }

@@ -11,9 +11,14 @@ int main() {
   // TODO: Fix transparency. Example: A png with a transparent section will be
   // drawn with that section as 100% opaque. So it will not blend with what's
   // behind it.
+  // TODO: Serialization for new features like Menus, CheckboxButtons, etc
+  // TODO: saveAppAsJSON function
 
   // Medium priority:
-  // TODO: fix checkbox.
+  // TODO: add texture path to json for buttons, etc.
+  //       -> Also add the loading of those in the DeserializeJSON.hpp file.
+  // TODO: add functions to set in the constructor of CheckboxButtons
+  // TODO: fix checkboxes.
   // A checkbox overlapping another button SOMETIMES break the checkbox
   // button???
   // TODO: check why x and y pos of quads are so weird. Draw a picture with
@@ -41,9 +46,12 @@ int main() {
   // app? That way, if the app is out of scope, all data of it gets removed as
   // well.
   // TODO: third value in position is currently not used.
+  // !--> Apparently it is used, but it acts very weird.
   // Find out if it can be used for layering, aka determine what should render
   // infront, if there are overlapping sprites
   // TODO: add subfolders and sort files
+  // TODO: maybe add functionality to make a checkbox button with a colored
+  // texture?
 
   mlh::Renderer App = mlh::Renderer();
 
@@ -51,38 +59,6 @@ int main() {
                 "../resources/Shaders/Fragment.shader");
   mlh::DeserializeJSON::deserializeJSON("../resources/Files/test_app_1.json",
                                         App);
-
-  // Checkbox
-  mlh::Quad QuadForCheckbox = mlh::QuadGenerator::getBasicQuad();
-
-  mlh::Vertex TestA = {0.0f, 0.75f, 0.0f, 1.0f, 1.0f,
-                       1.0f, 1.0f,  0.0f, 0.0f, 0.0f};
-  mlh::Vertex TestB = {0.25f, 0.75f, -1.0f, 1.0f, 1.0f,
-                       1.0f,  1.0f,  1.0f,  0.0f, 0.0f};
-  mlh::Vertex TestC = {0.25f, 1.0f, -1.0f, 1.0f, 1.0f,
-                       1.0f,  1.0f, 1.0f,  1.0f, 0.0f};
-  mlh::Vertex TestD = {0.0f, 1.0f, -1.0f, 1.0f, 1.0f,
-                       1.0f, 1.0f, 0.0f,  1.0f, 0.0f};
-
-  QuadForCheckbox.A = TestA;
-  QuadForCheckbox.B = TestB;
-  QuadForCheckbox.C = TestC;
-  QuadForCheckbox.D = TestD;
-
-  float UncheckedCheckboxTexID =
-      App.createTexture("../resources/Textures/UncheckedCheckbox.png");
-  float CheckedCheckboxTexID =
-      App.createTexture("../resources/Textures/CheckedCheckboxThick.png");
-
-  mlh::changeQuadTexture(QuadForCheckbox, UncheckedCheckboxTexID);
-  mlh::Quad UncheckedQuad = QuadForCheckbox;
-  mlh::changeQuadTexture(QuadForCheckbox, CheckedCheckboxTexID);
-  mlh::Quad CheckedQuad = QuadForCheckbox;
-
-  mlh::CheckboxButton TestCheckBox =
-      mlh::CheckboxButton(UncheckedQuad, CheckedQuad);
-
-  App.addCheckboxButton(TestCheckBox);
 
   // Menu
 

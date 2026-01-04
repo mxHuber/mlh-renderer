@@ -306,8 +306,6 @@ private:
       std::cout << "Failed to load texture" << std::endl;
     }
 
-    std::cout << "NrChannels: " << NrChannels << std::endl;
-
     if (NrChannels == 3) {
       glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB,
                    GL_UNSIGNED_BYTE, Data);

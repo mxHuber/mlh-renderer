@@ -23,7 +23,7 @@ public:
   }
 
   inline void onPress() override {
-    // If there is a function set, run it
+    // If a function is set, run it
     Func();
     // Flip check bool
     isChecked = !isChecked;
